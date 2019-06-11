@@ -4,8 +4,6 @@ test -f ~/.bashrc && . ~/.bashrc
 
 ###
 
-source ~/.bash_custom.sh
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook')"

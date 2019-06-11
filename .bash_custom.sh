@@ -1,19 +1,23 @@
 
-###
+## aliases
+alias appget="sudo aptitude"
+# ls aliases
+# h = readable file size
+alias ll='ls -lh'
+# S = sort by file size
+alias lhs='ls -lhS'
+# A = list all
+alias la='ls -lhA'
+# t = sort my modification date
+alias lt='ls -lht'
+## aliases
 
-HISTSIZE=20000
-HISTFILESIZE=20000
+# tab size
+tabs -3
 
-export PIP_DEFAULT_TIMEOUT=1000
-
-export PATH="~/nobackup/VSCode-linux-x64:$PATH"
-export PATH=/home/soft/likwid/bin:/home/soft/likwid/sbin:$PATH
-export PATH="~/nobackup/VSCode-linux-x64:$PATH"
-export NVM_DIR="/home/bfs15/.nvm"
-
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+# 100K lines is around one 10MB
+HISTSIZE=100000
+HISTFILESIZE=100000
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # Load RVM into a shell session *as a function*
@@ -21,7 +25,7 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
-# GIT PS1
+## GIT PS1
 if [ ! -f ~/.bash_git ]; then
     echo "~/.bash_git not found, downloading"
     curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
@@ -32,6 +36,8 @@ GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWCOLORHINTS=true
 
 source ~/.bash_git
+## GIT PS1
+
 # SSH AGENT for ssh keys
 eval "$(ssh-agent -s)"
 
@@ -40,17 +46,11 @@ eval "$(ssh-agent -s)"
 PS1='\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] $(date +%Y%m%d-%H%M) \[\033[01;34m\][\w]\e[0m$(__git_ps1) \$\n'
 PROMPT_COMMAND='__git_ps1 "\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] $(date +%Y%m%d-%H%M) \[\033[01;34m\][\w]\e[0m" " \\\$\n"'
 
-# Set Git language to English
-alias git='LANG=en_GB git'
-#alias git='LC_ALL=en_GB git'
 
-
-alias appget="sudo aptitude"
-# some more ls aliases
-alias ll='ls -lh'
-alias la='ls -lhA'
-alias lt='ls -lht'
-
-
-# tab size
-tabs -3
+# mouse acc
+# https://forums.linuxmint.com/viewtopic.php?t=208817
+# https://wiki.archlinux.org/index.php/Mouse_acceleration
+# ignore errors
+xinput --set-prop 11 "Device Accel Velocity Scaling" 1 2>  /dev/null
+xinput --set-prop 11 "Device Accel Profile" -1 2>  /dev/null
+xinput --set-prop 11 "Device Accel Adaptive Deceleration" 4 2>  /dev/null
