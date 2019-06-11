@@ -1,0 +1,8 @@
+[core]
+	autocrlf = false
+	editor = code
+[user]
+	email = bruno.serbena@gmail.com
+	name = Bruno FS
+[push]
+	default = matching
