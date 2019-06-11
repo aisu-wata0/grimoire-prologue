@@ -15,3 +15,5 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
 export NVM_DIR="/home/bfs15/.nvm"
 export NVM_DIR="~/.nvm"
+
+export PYTHONPATH="~/scripts/:$PYTHONPATH"
