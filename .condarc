@@ -3,5 +3,4 @@ channels:
   - pytorch
   - defaults
 remote_read_timeout_secs: 2000
-# remote_connect_timeout_secs: 1200
 remote_connect_timeout_secs: 2000
