@@ -1,5 +1,5 @@
 [core]
-	autocrlf = false
+	autocrlf = input
 	editor = code
 [user]
 	email = bruno.serbena@gmail.com
