@@ -1,4 +1,6 @@
 
+test -f ~/.profile && . ~/.profile
+
 ## aliases
 alias appget="sudo aptitude"
 # ls aliases
