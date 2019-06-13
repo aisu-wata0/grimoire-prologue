@@ -1,4 +1,4 @@
-#! python3.5
+#! python
 
 import argparse
 import subprocess
@@ -53,10 +53,11 @@ if __name__ == "__main__":
 
 			# Download the file from 'url' and save it locally under 'file_name':
 			Grimoire.downloadFile(url, pathYoutubeDl)
-
-	bashCommand = pathYoutubeDl + ' -U '
-	print(bashCommand, flush=True)
-	process = subprocess.call(bashCommand)
+		else:
+			# update
+			bashCommand = pathYoutubeDl + ' -U '
+			print(bashCommand, flush=True)
+			process = subprocess.call(bashCommand)
 
 	Grimoire.ensure_dir(args.pathOutDir)
 
