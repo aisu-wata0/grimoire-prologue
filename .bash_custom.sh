@@ -114,6 +114,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# conda breaks gsettings path
+# https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
+alias gsettings=/usr/bin/gsettings
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$("$HOME/devsoft/miniconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
