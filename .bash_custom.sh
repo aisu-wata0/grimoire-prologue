@@ -13,16 +13,18 @@ fi
 
 alias appget="sudo aptitude"
 # ls aliases
+## Colorize the ls output ##
+alias ls='ls --color=auto'
 # h = readable file size
-alias ll='ls -lh'
+alias ll='ls -lh --color=auto'
 # S = sort by file size
-alias lhs='ls -lhS'
+alias lhs='ls -lhS --color=auto'
 # A = list all
-alias la='ls -lhA'
+alias la='ls -lhA --color=auto'
 # A = list all
-alias lahs='ls -lhAS'
+alias lahs='ls -lhAS --color=auto'
 # t = sort my modification date
-alias lt='ls -lht'
+alias lt='ls -lht --color=auto'
 
 ##
 
