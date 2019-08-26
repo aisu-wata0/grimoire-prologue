@@ -1,7 +1,16 @@
+# ~/.bashrc: executed by bash(1) for non-login shells.
 
-test -f ~/.profile && . ~/.profile
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
 
-## aliases
+## Alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
 alias appget="sudo aptitude"
 # ls aliases
 # h = readable file size
@@ -10,22 +19,16 @@ alias ll='ls -lh'
 alias lhs='ls -lhS'
 # A = list all
 alias la='ls -lhA'
+# A = list all
+alias lahs='ls -lhAS'
 # t = sort my modification date
 alias lt='ls -lht'
-## aliases
+
+##
 
 # tab size
 tabs -3
 
-# 100K lines is around one 10MB
-HISTSIZE=100000
-HISTFILESIZE=100000
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-# Load RVM into a shell session *as a function*
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 ## GIT PS1
 if [ ! -f ~/.bash_git ]; then
@@ -45,14 +48,83 @@ eval "$(ssh-agent -s)"
 
 #[usr@machine] [path] $
 #
-PS1='\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] $(date +%Y%m%d-%H%M) \[\033[01;34m\][\w]\e[0m$(__git_ps1) \$\n'
-PROMPT_COMMAND='__git_ps1 "\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] $(date +%Y%m%d-%H%M) \[\033[01;34m\][\w]\e[0m" " \\\$\n"'
+PS1='\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)]\e[0m$(__git_ps1) \$\n'
+# PROMPT_COMMAND='__git_ps1 "\n$CONDA_DEFAULT_ENV ${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)] \e[0m" "\\\$\n"'
 
 
-# mouse acc
-# https://forums.linuxmint.com/viewtopic.php?t=208817
-# https://wiki.archlinux.org/index.php/Mouse_acceleration
-# ignore errors
-xinput --set-prop 11 "Device Accel Velocity Scaling" 1 2>  /dev/null
-xinput --set-prop 11 "Device Accel Profile" -1 2>  /dev/null
-xinput --set-prop 11 "Device Accel Adaptive Deceleration" 4 2>  /dev/null
+# 100K lines is around one 10MB
+HISTSIZE=100000
+HISTFILESIZE=100000
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+#shopt -s globstar
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+# set a fancy prompt (non-color, unless we know we "want" color)
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+
+# uncomment for a colored prompt, if the terminal has the capability; turned off
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+	# We have color support; assume it's compliant with Ecma-48
+	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+	# a case would tend to support setf rather than setaf.)
+	color_prompt=yes
+    else
+	color_prompt=
+    fi
+fi
+
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$("$HOME/devsoft/miniconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "~/devsoft/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "~/devsoft/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="$PATH:~/devsoft/miniconda3/bin"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
