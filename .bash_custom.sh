@@ -11,6 +11,10 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# https://stackoverflow.com/questions/6339287/copy-or-rsync-command
+# rsync is superior
+alias cp="rsync -ah --inplace --no-whole-file --info=progress2"
+
 alias appget="sudo aptitude"
 # ls aliases
 ## Colorize the ls output ##
