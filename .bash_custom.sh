@@ -59,7 +59,7 @@ eval "$(ssh-agent -s)"
 #[usr@machine] [path] $
 #
 PS1='\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)]\e[0m$(__git_ps1) \$\n'
-# PROMPT_COMMAND='__git_ps1 "\n$CONDA_DEFAULT_ENV ${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)] \e[0m" "\\\$\n"'
+PROMPT_COMMAND='__git_ps1 "\n($CONDA_DEFAULT_ENV) ${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)] \e[0m" "\\\$\n"'
 
 
 # 100K lines is around one 10MB
