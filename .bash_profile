@@ -1,3 +1,6 @@
 
+echo "source .bash_profile"
+
 test -f ~/.profile && . ~/.profile
-test -f ~/.bashrc && . ~/.bashrc
+# .profile sources bashrc
+# test -f ~/.bashrc && . ~/.bashrc

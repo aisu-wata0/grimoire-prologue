@@ -1,7 +1,5 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-test -f ~/.profile && . ~/.profile
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;

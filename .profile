@@ -1,3 +1,4 @@
+echo "source .profile"
 
 export LANG=en_US.UTF-8
 
