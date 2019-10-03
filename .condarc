@@ -1,5 +1,6 @@
 ssl_verify: false
 channels:
+  - conda-forge
   - pytorch
   - defaults
 remote_read_timeout_secs: 11000
