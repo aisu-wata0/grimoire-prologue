@@ -1,5 +1,7 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
+test -f ~/.profile && . ~/.profile
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -7,6 +9,7 @@ case $- in
 esac
 
 ## Alias definitions.
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -39,7 +42,6 @@ alias lt='ls -lht --color=auto'
 # tab size
 tabs -3
 
-
 ## GIT PS1
 if [ ! -f ~/.bash_git ]; then
     echo "~/.bash_git not found, downloading"
@@ -61,16 +63,19 @@ eval "$(ssh-agent -s)"
 PS1='\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)]\e[0m$(__git_ps1) \$\n'
 PROMPT_COMMAND='__git_ps1 "\n($CONDA_DEFAULT_ENV) ${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)] \e[0m" "\\\$\n"'
 
+# Comand History
 
-# 100K lines is around one 10MB
+## 100K lines is around one 10MB
+
 HISTSIZE=100000
 HISTFILESIZE=100000
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
+## don't put duplicate lines or lines starting with space in the history.
+## See bash(1) for more options
+
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
+## append to the history file, don't overwrite it
 shopt -s histappend
 
 # check the window size after each command and, if necessary,
@@ -124,6 +129,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+
+# mouse acc
+
+## https://forums.linuxmint.com/viewtopic.php?t=208817
+## https://wiki.archlinux.org/index.php/Mouse_acceleration
+## ignore errors
+xinput --set-prop 11 "Device Accel Velocity Scaling" 1 2>  /dev/null
+xinput --set-prop 11 "Device Accel Profile" -1 2>  /dev/null
+xinput --set-prop 11 "Device Accel Adaptive Deceleration" 4 2>  /dev/null
+
+
 # conda breaks gsettings path
 # https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
 alias gsettings=/usr/bin/gsettings
@@ -141,4 +157,9 @@ else
     fi
 fi
 unset __conda_setup
+# <<< conda initialize <<<
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook')"
 # <<< conda initialize <<<
