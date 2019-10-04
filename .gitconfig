@@ -6,3 +6,7 @@
 	name = Bruno FS
 [push]
 	default = matching
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
