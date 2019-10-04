@@ -159,5 +159,5 @@ unset __conda_setup
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook')"
+eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
 # <<< conda initialize <<<
