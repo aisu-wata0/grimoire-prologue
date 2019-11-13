@@ -12,6 +12,20 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   exec tmux
 fi
 
+echo
+echo '# Tmux'
+echo 'Ctrl+b c  Create a new window (with shell)'
+echo 'Ctrl+b w  Choose window from a list, x to kill any'
+echo 'Ctrl+b 0  Switch to window 0 (by number)'
+echo 'Ctrl+b %  Split current pane horizontally into two panes'
+echo 'Ctrl+b "  Split current pane vertically into two panes'
+echo 'Ctrl+b o  Go to the next pane'
+echo 'Ctrl+b ;  Toggle between the current and previous pane'
+echo 'Ctrl+b x  Close the current pane'
+echo 'Ctrl+b ,  Rename the current window'
+echo '# Tmux'
+echo
+
 ## Alias definitions.
 
 if [ -f ~/.bash_aliases ]; then
