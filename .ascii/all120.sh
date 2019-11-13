@@ -1,3 +1,4 @@
+# Koakuma dead inside
 echo '/-/--:--.+:```.:-.`-:/+os:/+/.    .-//::---:-------------------------:/++:----:o+++++//:::/:.:-.:-:.  `  oysoo+:..:..  `'
 echo '.:......:+-.````.:+/://+:-+::/-`-/::-----::--------------------:--------/++/:--++++++++++/:::::-:+`  ` `:ohdhyoo+:`:-```'
 echo '.:.......-/+/--::/y/:.` `.-/+++::-------::----------------------::--------/o+//+++++++++++++/:::/`  `  .oyddddhyso:+--.`'
@@ -54,6 +55,8 @@ echo '+os+++`  ..`    `--.`   `.--/:-++++/:dsssss+o.`oossyhdmNmo-+++++++syho    
 echo 'oysoo-   `    `--`    `.-.`  -++++o:+hssssoo-`.yhdmNNNNh-`++++++osyys-:      --:sddo     ``````````````:-..-`..         '
 
 
+
+# Nep Despair
 echo 'NNNNNNNNNNNNNNNNNNNNN+         `...-.``   ``        .-  .`                    ``  `..`                 :hNNNNNNNNNNNNNNN'
 echo 'NNNNNNNNNNNNNNNNNNNm/    `:-:.      /`  ```        .-  `.                      ```  `..`          ``   ``:hNNNNNNNNNNNNN'
 echo 'NNNNNNNNN+:/oydmNmy:     /..:      .:-```         .-`  `.                `      ```    ..`         .`   ```/mNNNNNNNNNNN'
