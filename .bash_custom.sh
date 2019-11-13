@@ -6,6 +6,12 @@ case $- in
       *) return;;
 esac
 
+# Start tmux ٩(◕‿◕｡)۶
+
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
+
 ## Alias definitions.
 
 if [ -f ~/.bash_aliases ]; then
@@ -34,6 +40,13 @@ alias la='ls -lhA --color=auto'
 alias lahs='ls -lhAS --color=auto'
 # t = sort my modification date
 alias lt='ls -lht --color=auto'
+
+# sudo apt update        # Fetches the list of available updates
+# sudo apt upgrade -y       # Installs some updates;
+# sudo apt full-upgrade -y  # Installs updates; may also remove packages
+# sudo apt autoremove -y    # Removes any old packages that are no longer needed
+
+alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y;'"
 
 ##
 
