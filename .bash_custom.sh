@@ -27,7 +27,7 @@ echo '# Tmux'
 echo
 
 # Print ASCII art
-. './.ascii/art.sh'
+. ~/.ascii/art.sh
 
 ## Alias definitions.
 
