@@ -48,6 +48,7 @@ mklink c:\Users\bruno\.gitconfig  e:\Users\Serbena\Git\grimoire-prologue\.gitcon
 mklink c:\Users\bruno\.minttyrc  e:\Users\Serbena\Git\grimoire-prologue\.minttyrc
 mklink c:\Users\bruno\.profile  e:\Users\Serbena\Git\grimoire-prologue\.profile
 mklink /D c:\Users\bruno\scripts\  e:\Users\Serbena\Git\grimoire-prologue\scripts\
+mklink /D c:\Users\bruno\.ascii\  e:\Users\Serbena\Git\grimoire-prologue\.ascii\
 ```
 
 ----------------------------
