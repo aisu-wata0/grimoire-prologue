@@ -1,4 +1,24 @@
+if [ ! $DOT_PROFILE_SOURCED ]; then
+
+
 echo "source .profile"
+export DOT_PROFILE_SOURCED=0
+
+if [ ! $DOT_PROFILE_SOURCED ];
+    then
+    echo ".profile profile"
+    test -f ~/.profile && . ~/.profile;
+fi
+if [ ! $DOT_BASHRC_SOURCED ];
+    then
+    echo ".profile bashrc"
+    test -f ~/.barshrc && . ~/.barshrc;
+fi
+if [ ! $DOT_BASHPROFILE_SOURCED ];
+    then
+    echo ".profile bash_profile"
+    test -f ~/.bash_profile && . ~/.bash_profile;
+fi
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
@@ -39,3 +59,6 @@ export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# END if [ ! $DOT_PROFILE_SOURCED ]; then
+fi

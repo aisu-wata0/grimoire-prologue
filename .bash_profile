@@ -1,7 +1,25 @@
 
-echo "source .bash_profile"
+if [ ! $DOT_BASHPROFILE_SOURCED ]; then
 
-test -f ~/.profile && . ~/.profile
+echo "source .bash_profile"
+export DOT_BASHPROFILE_SOURCED=0
+
+if [ ! $DOT_PROFILE_SOURCED ];
+    then
+    echo ".bash_profile profile"
+    test -f ~/.profile && . ~/.profile;
+fi
+if [ ! $DOT_BASHRC_SOURCED ];
+    then
+    echo ".bash_profile bashrc"
+    test -f ~/.bashrc && . ~/.bashrc;
+fi
+if [ ! $DOT_BASHPROFILE_SOURCED ];
+    then
+    echo ".bash_profile bash_profile"
+    test -f ~/.bash_profile && . ~/.bash_profile;
+fi
+
 # .profile sources bashrc
 # test -f ~/.bashrc && . ~/.bashrc
 
@@ -27,4 +45,7 @@ if [ -f "${SSH_ENV}" ]; then
     }
 else
     start_agent;
+fi
+
+# END if [ ! $DOT_BASHPROFILE_SOURCED ]; then
 fi

@@ -1,3 +1,21 @@
+
+if [ ! $DOT_PROFILE_SOURCED ];
+    then    
+    echo ".bash_custom profile"
+    test -f ~/.profile && . ~/.profile;
+fi
+if [ ! $DOT_BASHRC_SOURCED ];
+    then    
+    echo ".bash_custom bashrc"
+    test -f ~/.bashrc && . ~/.bashrc;
+fi
+if [ ! $DOT_BASHPROFILE_SOURCED ];
+    then    
+    echo ".bash_custom bash_profile"
+    test -f ~/.bash_profile && . ~/.bash_profile;
+fi
+
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # If not running interactively, don't do anything
@@ -25,6 +43,32 @@ echo 'Ctrl+b x  Close the current pane'
 echo 'Ctrl+b ,  Rename the current window'
 echo '# Tmux'
 echo
+
+# To setup tmux on windows
+# https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
+# You can install the whole distribution of the tools from https://www.msys2.org/ and run a command to install Tmux. (GIT Bash uses MINGW compilation of GNU tools. It uses only selected ones.)
+# And then copy some files to installation folder of Git. This is what you do:
+
+# Install before-mentioned msys2 package and run bash shell
+# Install tmux using the following command: pacman -S tmux
+# Go to msys2 directory, in my case it is C:\msys64\usr\bin
+# Copy tmux.exe and msys-event-2-1-4.dll to your Git for Windows directory, mine is C:\Program Files\Git\usr\bin
+
+# https://github.com/valtron/llvm-stuff/wiki/Set-up-Windows-dev-environment-with-MSYS2
+# MSYS2
+# Note: $VARS refer to strings you should substitute yourself. E.g. $DEV -> D:/dev
+
+# Download from http://msys2.github.io
+# Install into $DEV/msys64
+# Run $DEV/msys2_shell.cmd
+# Run pacman -Syuu
+# Close the shell; reopen it, and run pacman -Syuu again, just in case :p
+# Pacman
+# pacman is the package manager bundled with msys. Use it to install useful things like gcc, flex, bison, git. The commands are pretty cryptic, so use the Pacman/Rosetta.
+
+# Set up $PATH
+# Open "Environment Variables > System Variables > Path"
+# At the end, add $DEV/msys64/usr/bin
 
 # Print ASCII art
 . ~/.ascii/art.sh
