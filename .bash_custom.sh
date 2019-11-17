@@ -112,7 +112,7 @@ alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt
 ##
 
 # tab size
-tabs -3
+tabs -4 2>  /dev/null
 
 ## GIT PS1
 if [ ! -f ~/.bash_git ]; then
