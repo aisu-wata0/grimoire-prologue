@@ -6,17 +6,17 @@ export DOT_BASHPROFILE_SOURCED=0
 
 if [ ! $DOT_PROFILE_SOURCED ];
     then
-    echo ".bash_profile profile"
+    echo "      .bash_profile: profile"
     test -f ~/.profile && . ~/.profile;
 fi
 if [ ! $DOT_BASHRC_SOURCED ];
     then
-    echo ".bash_profile bashrc"
+    echo "      .bash_profile: bashrc"
     test -f ~/.bashrc && . ~/.bashrc;
 fi
 if [ ! $DOT_BASHPROFILE_SOURCED ];
     then
-    echo ".bash_profile bash_profile"
+    echo "      .bash_profile: bash_profile"
     test -f ~/.bash_profile && . ~/.bash_profile;
 fi
 
