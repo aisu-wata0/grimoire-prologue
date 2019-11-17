@@ -1,0 +1,3 @@
+[submodule "scripts/video-downplay"]
+	path = scripts/video-downplay
+	url = git@github.com:bfs15/video-downplay.git

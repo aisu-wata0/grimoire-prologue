@@ -47,7 +47,9 @@ export LANG=en_US.UTF-8
 export PIP_DEFAULT_TIMEOUT=1000
 
 export PATH="~/scripts/:$PATH"
+export PATH="~/scripts/video-downplay/:$PATH"
 export PYTHONPATH="~/scripts/:$PYTHONPATH"
+export PYTHONPATH="~/scripts/video-downplay/:$PYTHONPATH"
 
 export PATH="~/.local/bin:$PATH"
 export PATH="~/nobackup/VSCode-linux-x64:$PATH"
