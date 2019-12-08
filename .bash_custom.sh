@@ -111,17 +111,17 @@ fi
 alias appget="sudo aptitude"
 # ls aliases
 ## Colorize the ls output ##
-alias ls='ls --color=auto'
-# h = readable file size
-alias ll='ls -lh --color=auto'
-# S = sort by file size
-alias lhs='ls -lhS --color=auto'
-# A = list all
-alias la='ls -lhA --color=auto'
-# A = list all
-alias lahs='ls -lhAS --color=auto'
+# -h = readable file size
+alias ls='ls -h --color=auto'
+alias ll='ls -h -l --color=auto'
+# -A = list all
+alias la='ls -h -lA --color=auto'
+# -S = sort by file size
+alias lls='ls -h -lS --color=auto'
+alias las='ls -h -lAS --color=auto'
 # t = sort my modification date
-alias lt='ls -lht --color=auto'
+alias llt='ls -h -lt --color=auto'
+alias lat='ls -h -lAt --color=auto'
 
 # sudo apt update        # Fetches the list of available updates
 # sudo apt upgrade -y       # Installs some updates;
