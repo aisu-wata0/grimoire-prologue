@@ -129,6 +129,8 @@ alias lt='ls -lht --color=auto'
 # sudo apt autoremove -y    # Removes any old packages that are no longer needed
 
 alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y;'"
+alias t="exec tmux"
+alias f="find -iname"
 
 ##
 
