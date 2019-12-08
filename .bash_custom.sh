@@ -85,7 +85,28 @@ alias openvinoVars="source /opt/intel/openvino/bin/setupvars.sh"
 
 # https://stackoverflow.com/questions/6339287/copy-or-rsync-command
 # rsync is superior
-alias cp="rsync -ah --inplace --no-whole-file --info=progress2"
+
+if command -v rsync &> /dev/null; then
+    # -a, --archive
+    #        This is equivalent to -rlptgoD. It is a quick way  of  saying  you  want  recursion  and  want  to
+    #        preserve  almost  everything  (with -H being a notable omission).  The only exception to the above
+    #        equivalence is when --files-from is specified, in which case -r is not implied.
+    #
+    #        Note that -a does not preserve hardlinks, because finding multiply-linked files is expensive.  You
+    #        must separately specify -H
+    # -u, --update
+    #    This forces rsync to skip any files which exist on the destination and have a modified  time  that
+    #    is  newer than the source file.  (If an existing destination file has a modification time equal to
+    #    the source file’s, it will be updated if the sizes are different.
+
+    # -i, --itemize-changes
+    #    Requests  a  simple  itemized  list  of  the  changes  that are being made to each file, including
+    #    attribute changes.  This is exactly the same as specifying --out-format='%i %n%L'.  If you  repeat
+    #    the  option,  unchanged  files  will  also  be output, but only if the receiving rsync is at least
+    #    version 2.6.7 (you can use -vv with older versions of rsync, but that also turns on the output  of
+    #    other verbose messages)..
+    alias cp="rsync -au --partial-dir=.rsync-partial -e ssh -hi --info=progress2"
+fi
 
 alias appget="sudo aptitude"
 # ls aliases
