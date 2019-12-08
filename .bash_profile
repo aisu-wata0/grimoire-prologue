@@ -1,23 +1,23 @@
 
 if [ ! $DOT_BASHPROFILE_SOURCED ]; then
 
-echo "source .bash_profile"
+# echo "source .bash_profile"
 export DOT_BASHPROFILE_SOURCED=0
 
 if [ ! $DOT_PROFILE_SOURCED ];
     then
-    echo "      .bash_profile: profile"
-    test -f ~/.profile && . ~/.profile;
+    # echo "      .bash_custom: profile"
+    . ~/.profile 2> /dev/null;
 fi
 if [ ! $DOT_BASHRC_SOURCED ];
     then
-    echo "      .bash_profile: bashrc"
-    test -f ~/.bashrc && . ~/.bashrc;
+    # echo "      .bash_custom: bashrc"
+    . ~/.bashrc 2> /dev/null;
 fi
 if [ ! $DOT_BASHPROFILE_SOURCED ];
     then
-    echo "      .bash_profile: bash_profile"
-    test -f ~/.bash_profile && . ~/.bash_profile;
+    # echo "      .bash_custom: bash_profile"
+    . ~/.bash_profile 2> /dev/null;
 fi
 
 # .profile sources bashrc
@@ -27,9 +27,11 @@ fi
 SSH_ENV="$HOME/.ssh/environment"
 
 function start_agent {
-    echo "Initialising new SSH agent..."
+    case $- in
+        *i*) echo "Initialising new SSH agent...";; # interactive
+        *) ;; # not interactive
+    esac
     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
     chmod 600 "${SSH_ENV}"
     . "${SSH_ENV}" > /dev/null
     /usr/bin/ssh-add;

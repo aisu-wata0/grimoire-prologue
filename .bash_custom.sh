@@ -1,35 +1,34 @@
 
 if [ ! $DOT_PROFILE_SOURCED ];
-    then    
-    echo "      .bash_custom: profile"
-    test -f ~/.profile && . ~/.profile;
+    then
+    # echo "      .bash_custom: profile"
+    . ~/.profile 2> /dev/null;
 fi
 if [ ! $DOT_BASHRC_SOURCED ];
-    then    
-    echo "      .bash_custom: bashrc"
-    test -f ~/.bashrc && . ~/.bashrc;
+    then
+    # echo "      .bash_custom: bashrc"
+    . ~/.bashrc 2> /dev/null;
 fi
 if [ ! $DOT_BASHPROFILE_SOURCED ];
-    then    
-    echo "      .bash_custom: bash_profile"
-    test -f ~/.bash_profile && . ~/.bash_profile;
+    then
+    # echo "      .bash_custom: bash_profile"
+    . ~/.bash_profile 2> /dev/null;
 fi
-
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-      *) return;;
+    *i*) ;; # interactive
+    *) return;; # not interactive
 esac
 
 # Start tmux ٩(◕‿◕｡)۶
 # tmux on windows git bash  
 # https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]]; then
-  tmux
-fi
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]]; then
+#   tmux
+# fi
 
 echo
 echo '# Tmux'
@@ -217,6 +216,8 @@ xinput --set-prop 11 "Device Accel Adaptive Deceleration" 4 2>  /dev/null
 # https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
 alias gsettings=/usr/bin/gsettings
 
+
+condainit(){
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$("$HOME/devsoft/miniconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
@@ -236,3 +237,4 @@ unset __conda_setup
 # !! Contents within this block are managed by 'conda init' !!
 eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
 # <<< conda initialize <<<
+}

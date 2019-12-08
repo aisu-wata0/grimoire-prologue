@@ -2,10 +2,10 @@
 ###
 if [ ! $DOT_BASHRC_SOURCED ]; then
 
-echo "source .barshrc"
+# echo "source .barshrc"
 export DOT_BASHRC_SOURCED=0
 
-test -f ~/.bash_custom.sh && . ~/.bash_custom.sh
+. ~/.bash_custom.sh 2> /dev/null
 
 # END if [ ! $DOT_BASHRC_SOURCED ]; then
 fi

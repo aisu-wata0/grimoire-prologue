@@ -1,23 +1,23 @@
 if [ ! $DOT_PROFILE_SOURCED ]; then
 
 
-echo "source .profile"
+# echo "source .profile"
 export DOT_PROFILE_SOURCED=0
 
 if [ ! $DOT_PROFILE_SOURCED ];
     then
-    echo "      .profile: profile"
-    test -f ~/.profile && . ~/.profile;
+    # echo "      .bash_custom: profile"
+    . ~/.profile 2> /dev/null;
 fi
 if [ ! $DOT_BASHRC_SOURCED ];
     then
-    echo "      .profile: bashrc"
-    test -f ~/.barshrc && . ~/.barshrc;
+    # echo "      .bash_custom: bashrc"
+    . ~/.bashrc 2> /dev/null;
 fi
 if [ ! $DOT_BASHPROFILE_SOURCED ];
     then
-    echo "      .profile: bash_profile"
-    test -f ~/.bash_profile && . ~/.bash_profile;
+    # echo "      .bash_custom: bash_profile"
+    . ~/.bash_profile 2> /dev/null;
 fi
 
 # the default umask is set in /etc/profile; for setting the umask
