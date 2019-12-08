@@ -127,14 +127,28 @@ export GIT_PS1_SHOWCOLORHINTS=true
 source ~/.bash_git
 ## GIT PS1
 
-# () (chroot)[usr@machine] [path] [datetime] (git branch sync) $
+# (conda env) (chroot)[usr@machine] [path] [datetime] (git branch sync) $
 #
 # https://stackoverflow.com/questions/33220492/ps1-bash-command-substitution-not-working-on-windows-10
-export PS1="${debian_chroot:+($debian_chroot)}\[\033[33;1m\][\u@\h] \[\033[01;34m\][\w] \[\033[33;1m\][\D{%F %T}]\[\e[0m\]$(__git_ps1)"$' $\n'
-export PROMPT_COMMAND=${PROMPT_COMMAND}'history -a;'
-export PROMPT_COMMAND=${PROMPT_COMMAND}'__git_ps1 "\n${CONDA_DEFAULT_ENV:+($CONDA_DEFAULT_ENV) }${debian_chroot:+($debian_chroot)}\[\033[33;1m\][\u@\h] \[\033[01;34m\][\w] \[\033[33;1m\][\D{%F %T}]\[\e[0m\]" " \\\$\n";'
+bash_reset_color="\[\e[0m\]"
+bash_blue="\[\033[01;34m\]"
+bash_yellow="\[\033[33;1m\]"
+bash_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}[\u@\h]"
+bash_path="${bash_blue}[\w]"
+bash_time="${bash_yellow}[\D{%F %T}]"
+bash_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
+
+PS1_="${bash_location} ${bash_path} ${bash_time}${bash_reset_color}"
+
+export PS1="${PS1_}$(__git_ps1)"$' $\n'
+export PROMPT_COMMAND=${PROMPT_COMMAND}'__git_ps1 "\n${bash_conda}${PS1_}" " \\\$\n";'
 
 # Comand History
+
+# Every terminal has its history appended in the same file
+# .bash_history turns into a global timeline
+# this way, no command is left behind
+export PROMPT_COMMAND=${PROMPT_COMMAND}'history -a;'
 
 ## 100K lines is around one 10MB
 
