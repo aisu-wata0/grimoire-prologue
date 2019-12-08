@@ -151,18 +151,18 @@ source ~/.bash_git
 # (conda env) (chroot)[usr@machine] [path] [datetime] (git branch sync) $
 #
 # https://stackoverflow.com/questions/33220492/ps1-bash-command-substitution-not-working-on-windows-10
-bash_reset_color="\[\e[0m\]"
-bash_blue="\[\033[01;34m\]"
-bash_yellow="\[\033[33;1m\]"
-bash_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}[\u@\h]"
-bash_path="${bash_blue}[\w]"
-bash_time="${bash_yellow}[\D{%F %T}]"
-bash_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
+export bash_reset_color="\[\e[0m\]"
+export bash_blue="\[\033[01;34m\]"
+export bash_yellow="\[\033[33;1m\]"
+export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}[\u@\h]"
+export bash_ps1_path="${bash_blue}[\w]"
+export bash_ps1_time="${bash_yellow}[\D{%F %T}]"
+export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
 
-PS1_="${bash_location} ${bash_path} ${bash_time}${bash_reset_color}"
+export PS1_="${bash_ps1_location} ${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
 
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
-export PROMPT_COMMAND=${PROMPT_COMMAND}'__git_ps1 "\n${bash_conda}${PS1_}" " \\\$\n";'
+export PROMPT_COMMAND=${PROMPT_COMMAND}'__git_ps1 "\n${bash_ps1_conda}${PS1_}" " \\\$\n";'
 
 # Comand History
 
