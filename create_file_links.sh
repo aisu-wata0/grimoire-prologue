@@ -4,7 +4,7 @@
 
 fn(){
 	filename="$1"
-	./scripts/mklink_cywin.sh "${filename}" ~/"${filename}"
+	./scripts/make_link.sh "${filename}" ~/"${filename}"
 }
 
 for filename in ./.[!.]*; do

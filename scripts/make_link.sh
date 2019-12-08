@@ -46,7 +46,7 @@ if windows; then
 	path_link=$(cygpath -wal "${path_link}")
 fi
 
-if [[ -z "$2" ]]; then
+if [[ -z "$1" ]]; then
 	echo link.sh 'link' 'target'
 else
 	make_link "${path_target}" "${path_link}"
