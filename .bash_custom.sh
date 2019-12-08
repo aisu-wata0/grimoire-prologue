@@ -120,32 +120,31 @@ if [ ! -f ~/.bash_git ]; then
     curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
 fi
 
-GIT_PS1_SHOWUPSTREAM="verbose"
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWCOLORHINTS=true
+export GIT_PS1_SHOWUPSTREAM="verbose"
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWCOLORHINTS=true
 
 source ~/.bash_git
 ## GIT PS1
 
-# SSH AGENT for ssh keys
-# eval "$(ssh-agent -s)"
-
-#[usr@machine] [path] $
+# () (chroot)[usr@machine] [path] [datetime] (git branch sync) $
 #
-PS1='\n${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)]\e[0m$(__git_ps1) \$\n'
-PROMPT_COMMAND='__git_ps1 "\n($CONDA_DEFAULT_ENV) ${debian_chroot:+($debian_chroot)}\033[33;1m[\u@\h] \[\033[01;34m\][\w] \033[33;1m[$(date +%Y%m%d_%H%M)] \e[0m" "\\\$\n"'
+# https://stackoverflow.com/questions/33220492/ps1-bash-command-substitution-not-working-on-windows-10
+export PS1="${debian_chroot:+($debian_chroot)}\[\033[33;1m\][\u@\h] \[\033[01;34m\][\w] \[\033[33;1m\][\D{%F %T}]\[\e[0m\]$(__git_ps1)"$' $\n'
+export PROMPT_COMMAND=${PROMPT_COMMAND}'history -a;'
+export PROMPT_COMMAND=${PROMPT_COMMAND}'__git_ps1 "\n${CONDA_DEFAULT_ENV:+($CONDA_DEFAULT_ENV) }${debian_chroot:+($debian_chroot)}\[\033[33;1m\][\u@\h] \[\033[01;34m\][\w] \[\033[33;1m\][\D{%F %T}]\[\e[0m\]" " \\\$\n";'
 
 # Comand History
 
 ## 100K lines is around one 10MB
 
-HISTSIZE=100000
-HISTFILESIZE=100000
+export HISTSIZE=$((100*1000)) # stored in memory
+export HISTFILESIZE=$((2000*1000)) # stored in file
 
 ## don't put duplicate lines or lines starting with space in the history.
 ## See bash(1) for more options
 
-HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth
 
 ## append to the history file, don't overwrite it
 shopt -s histappend
