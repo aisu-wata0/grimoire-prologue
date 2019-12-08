@@ -130,6 +130,7 @@ alias lt='ls -lht --color=auto'
 
 alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y;'"
 alias t="exec tmux"
+alias ta="exec tmux attach"
 alias f="find -iname"
 
 ##
