@@ -4,18 +4,15 @@ if [ ! $DOT_PROFILE_SOURCED ]; then
 # echo "source .profile"
 export DOT_PROFILE_SOURCED=0
 
-if [ ! $DOT_PROFILE_SOURCED ];
-    then
+if [ ! $DOT_PROFILE_SOURCED ]; then
     # echo "      .bash_custom: profile"
     . ~/.profile 2> /dev/null;
 fi
-if [ ! $DOT_BASHRC_SOURCED ];
-    then
+if [ ! $DOT_BASHRC_SOURCED ]; then
     # echo "      .bash_custom: bashrc"
     . ~/.bashrc 2> /dev/null;
 fi
-if [ ! $DOT_BASHPROFILE_SOURCED ];
-    then
+if [ ! $DOT_BASHPROFILE_SOURCED ]; then
     # echo "      .bash_custom: bash_profile"
     . ~/.bash_profile 2> /dev/null;
 fi

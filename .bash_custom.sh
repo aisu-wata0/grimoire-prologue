@@ -1,16 +1,13 @@
 
-if [ ! $DOT_PROFILE_SOURCED ];
-    then
+if [ ! $DOT_PROFILE_SOURCED ]; then
     # echo "      .bash_custom: profile"
     . ~/.profile 2> /dev/null;
 fi
-if [ ! $DOT_BASHRC_SOURCED ];
-    then
+if [ ! $DOT_BASHRC_SOURCED ]; then
     # echo "      .bash_custom: bashrc"
     . ~/.bashrc 2> /dev/null;
 fi
-if [ ! $DOT_BASHPROFILE_SOURCED ];
-    then
+if [ ! $DOT_BASHPROFILE_SOURCED ]; then
     # echo "      .bash_custom: bash_profile"
     . ~/.bash_profile 2> /dev/null;
 fi
@@ -138,6 +135,27 @@ alias f="find -iname"
 # tab size
 tabs -4 2>  /dev/null
 
+# Comand History
+
+# Every terminal has its history appended in the same file
+# .bash_history turns into a global timeline
+# this way, no command is left behind
+export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
+
+## 100K lines is around one 10MB
+
+export HISTSIZE=$((100*1000)) # stored in memory
+export HISTFILESIZE=$((2000*1000)) # stored in file
+
+## don't put duplicate lines or lines starting with space in the history.
+## See bash(1) for more options
+
+export HISTCONTROL=ignoreboth
+
+## append to the history file, don't overwrite it
+shopt -s histappend
+
+
 ## GIT PS1
 if [ ! -f ~/.bash_git ]; then
     echo "~/.bash_git not found, downloading"
@@ -149,7 +167,7 @@ export GIT_PS1_SHOWDIRTYSTATE=true
 export GIT_PS1_SHOWCOLORHINTS=true
 
 source ~/.bash_git
-## GIT PS1
+## PS1
 
 # (conda env) (chroot)[usr@machine] [path] [datetime] (git branch sync) $
 #
@@ -165,29 +183,26 @@ export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
 export PS1_="${bash_ps1_location} ${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
 
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
-export PROMPT_COMMAND=${PROMPT_COMMAND}"__git_ps1 '\n${bash_ps1_conda}${PS1_}' ' \\\$\n';"
+export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${PS1_}' ' \\\$\n';"
 
-# Comand History
+# # Set window title
+# [path] $PREV_COMMAND
 
-# Every terminal has its history appended in the same file
-# .bash_history turns into a global timeline
-# this way, no command is left behind
-export PROMPT_COMMAND=${PROMPT_COMMAND}'history -a;'
+# https://unix.stackexchange.com/questions/104018/set-dynamic-window-title-based-on-command-input
 
-## 100K lines is around one 10MB
+function settitle () {
+    if [ -z "$PREV_COMMAND" ]; then
+        export PREV_COMMAND=${@}
+    fi
+    echo -ne "\033]0;[$(pwd)]  ${PREV_COMMAND}\007"
+}
 
-export HISTSIZE=$((100*1000)) # stored in memory
-export HISTFILESIZE=$((2000*1000)) # stored in file
+export PROMPT_COMMAND=${PROMPT_COMMAND}' export PREV_COMMAND="";'
 
-## don't put duplicate lines or lines starting with space in the history.
-## See bash(1) for more options
+trap 'settitle "$BASH_COMMAND"' DEBUG
 
-export HISTCONTROL=ignoreboth
 
-## append to the history file, don't overwrite it
-shopt -s histappend
-
-# check the window size after each command and, if necessary,
+# # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
