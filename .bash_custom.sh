@@ -165,7 +165,7 @@ export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
 export PS1_="${bash_ps1_location} ${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
 
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
-export PROMPT_COMMAND=${PROMPT_COMMAND}'__git_ps1 "\n${bash_ps1_conda}${PS1_}" " \\\$\n";'
+export PROMPT_COMMAND=${PROMPT_COMMAND}"__git_ps1 '\n${bash_ps1_conda}${PS1_}' ' \\\$\n';"
 
 # Comand History
 
