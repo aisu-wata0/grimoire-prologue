@@ -29,16 +29,15 @@ esac
 
 echo
 echo '# Tmux'
-echo 'Ctrl+b c  Create a new window (with shell)'
-echo 'Ctrl+b w  Choose window from a list, x to kill any'
-echo 'Ctrl+b 0  Switch to window 0 (by number)'
-echo 'Ctrl+b %  Split current pane horizontally into two panes'
-echo 'Ctrl+b "  Split current pane vertically into two panes'
-echo 'Ctrl+b o  Go to the next pane'
-echo 'Ctrl+b ;  Toggle between the current and previous pane'
-echo 'Ctrl+b x  Close the current pane'
-echo 'Ctrl+b ,  Rename the current window'
-echo '# Tmux'
+echo 'Ctrl+t  Create a new window (with shell)'
+echo 'Ctrl+w  Go to the prev window'
+echo 'Ctrl+e  Go to the next window'
+echo "p '  Toggle between last windows"
+echo 'Ctrl+[  Split current pane vertically into two panes'
+echo 'Ctrl+]  Split current pane horizontally into two panes'
+echo 'Alt+arrows  To go to panes'
+echo 'p w  Choose window from a list, x to kill any'
+echo 'Ctrl+D  Close the current pane'
 echo
 
 # To setup tmux on windows
@@ -268,6 +267,35 @@ xinput --set-prop 11 "Device Accel Adaptive Deceleration" 4 2>  /dev/null
 # https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
 alias gsettings=/usr/bin/gsettings
 
+
+# ## SSH Agent autostart
+# Auto start ssh-agent if necessary
+SSH_ENV="$HOME/.ssh/environment"
+
+function start_agent {
+    case $- in
+        *i*) echo "Initialising new SSH agent...";; # interactive
+        *) ;; # not interactive
+    esac
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -p ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    # ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
+# ## Conda initialize
 
 condainit(){
 # >>> conda initialize >>>

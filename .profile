@@ -2,7 +2,7 @@ if [ ! $DOT_PROFILE_SOURCED ]; then
 
 
 # echo "source .profile"
-export DOT_PROFILE_SOURCED=0
+DOT_PROFILE_SOURCED=0
 
 if [ ! $DOT_PROFILE_SOURCED ]; then
     # echo "      .bash_custom: profile"
