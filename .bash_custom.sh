@@ -101,7 +101,7 @@ if command -v rsync &> /dev/null; then
     #    the  option,  unchanged  files  will  also  be output, but only if the receiving rsync is at least
     #    version 2.6.7 (you can use -vv with older versions of rsync, but that also turns on the output  of
     #    other verbose messages)..
-    alias cp="rsync -au --partial-dir=.rsync-partial -e ssh -hi --info=progress2"
+    alias cp="rsync -au -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
 fi
 
 alias appget="sudo aptitude"
