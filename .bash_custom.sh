@@ -174,12 +174,12 @@ source ~/.bash_git
 export bash_reset_color="\[\e[0m\]"
 export bash_blue="\[\033[01;34m\]"
 export bash_yellow="\[\033[33;1m\]"
-export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}[\u@\h]"
-export bash_ps1_path="${bash_blue}[\w]"
+export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}\u@\h"
+export bash_ps1_path="${bash_blue}\w"
 export bash_ps1_time="${bash_yellow}[\D{%F %T}]"
 export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
 
-export PS1_="${bash_ps1_location} ${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
+export PS1_="${bash_ps1_location}:${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
 
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
 export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${PS1_}' ' \\\$\n';"
