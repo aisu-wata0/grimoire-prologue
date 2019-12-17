@@ -186,7 +186,7 @@ export bash_yellow="\[\033[33;1m\]"
 export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}\u@\h"
 export bash_ps1_path="${bash_blue}\w"
 export bash_ps1_time="${bash_yellow}[\D{%F %T}]"
-export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
+export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\`basename \$CONDA_DEFAULT_ENV\`) }"
 export bash_ps1_venv="\${VIRTUAL_ENV:+(\`basename \$VIRTUAL_ENV\`) }"
 
 export PS1_="${bash_ps1_location}:${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
