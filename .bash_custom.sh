@@ -187,11 +187,12 @@ export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}\u@\
 export bash_ps1_path="${bash_blue}\w"
 export bash_ps1_time="${bash_yellow}[\D{%F %T}]"
 export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
+export bash_ps1_venv="\${VIRTUAL_ENV:+(\`basename \$VIRTUAL_ENV\`) }"
 
 export PS1_="${bash_ps1_location}:${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
 
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
-export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${PS1_}' ' \\\$\n';"
+export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${bash_ps1_venv}${PS1_}' ' \\\$\n';"
 
 # # Set window title
 # [path] $PREV_COMMAND
@@ -307,38 +308,42 @@ fi
 # ## Conda initialize
 
 condainit_linux_dir(){
-# ### conda initialize ###
-CONDA_DIR="$1"
-if [ ! -d "$CONDA_DIR" ]; then
-  return 1;
-fi;
-__conda_setup="$("$CONDA_DIR/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$CONDA_DIR/etc/profile.d/conda.sh" ]; then
-        . "$CONDA_DIR/etc/profile.d/conda.sh"
+    # ### conda initialize ###
+    CONDA_DIR="$1"
+    if [ ! -d "$CONDA_DIR" ]; then
+    return 1;
+    fi;
+    __conda_setup="$("$CONDA_DIR/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="$PATH:$CONDA_DIR/bin"
+        if [ -f "$CONDA_DIR/etc/profile.d/conda.sh" ]; then
+            . "$CONDA_DIR/etc/profile.d/conda.sh"
+        else
+            export PATH="$PATH:$CONDA_DIR/bin"
+        fi
     fi
-fi
-unset __conda_setup
-# ### conda initialize ###
+    unset __conda_setup
+    # ### conda initialize ###
 }
 
 condainit_linux(){
-condainit_linux_dir "$HOME/devsoft/miniconda3"; || condainit_linux_dir "$HOME/.local/miniconda3"; || condainit_linux_dir "$HOME/miniconda3";
+    condainit_linux_dir "$HOME/devsoft/miniconda3" || {
+    condainit_linux_dir "$HOME/.local/miniconda3" || {
+    condainit_linux_dir "$HOME/miniconda3"
+    }
+    } 
 }
 
 condainit_windows(){
-# ### conda initialize ###
-eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
-# ### conda initialize ###
+    # ### conda initialize ###
+    eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
+    # ### conda initialize ###
 }
 
 condainit(){
-condainit_linux
-condainit_windows
+    condainit_linux
+    condainit_windows
 }
 
-condainit
+# condainit
