@@ -59,5 +59,9 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Cuda CUPTI
+export CUDA_HOME="/usr/local/cuda/"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/extras/CUPTI/lib64"
+
 # END if [ ! $DOT_PROFILE_SOURCED ]; then
 fi

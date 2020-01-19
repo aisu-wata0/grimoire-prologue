@@ -72,18 +72,21 @@ if [[ "$TERM" =~ "screen".* ]]; then
     }
 fi
 
-## Alias definitions.
+# # Alias definitions.
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# OpenVino #-
-alias openvinoVars="source /opt/intel/openvino/bin/setupvars.sh"
-# -# OpenVino
+# keep aliases on sudo
+alias sudo='sudo '
 
+# ## OpenVino
+alias openvinoVars="source /opt/intel/openvino/bin/setupvars.sh"
+# <<< OpenVino
+
+# ## cp -> rsync
 # https://stackoverflow.com/questions/6339287/copy-or-rsync-command
-# rsync is superior
 
 if command -v rsync &> /dev/null; then
     # -a, --archive
@@ -107,6 +110,8 @@ if command -v rsync &> /dev/null; then
     alias cp="rsync -au -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
 fi
 
+# <<< cp -> rsync <<<
+
 alias appget="sudo aptitude"
 # ls aliases
 ## Colorize the ls output ##
@@ -126,13 +131,17 @@ alias lat='ls -h -lAt --color=auto'
 # sudo apt upgrade -y       # Installs some updates;
 # sudo apt full-upgrade -y  # Installs updates; may also remove packages
 # sudo apt autoremove -y    # Removes any old packages that are no longer needed
-
 alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y;'"
+
+# ## tmux
+
 alias t="exec tmux"
 alias ta="exec tmux attach"
 alias f="find -iname"
 
-##
+# <<< tmux <<<
+
+# <<<< Alias definitions. <<<<
 
 # tab size
 tabs -4 2>  /dev/null
@@ -180,12 +189,13 @@ export bash_yellow="\[\033[33;1m\]"
 export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}\u@\h"
 export bash_ps1_path="${bash_blue}\w"
 export bash_ps1_time="${bash_yellow}[\D{%F %T}]"
-export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\$CONDA_DEFAULT_ENV) }"
+export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\`basename \$CONDA_DEFAULT_ENV\`) }"
+export bash_ps1_venv="\${VIRTUAL_ENV:+(\`basename \$VIRTUAL_ENV\`) }"
 
 export PS1_="${bash_ps1_location}:${bash_ps1_path} ${bash_ps1_time}${bash_reset_color}"
 
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
-export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${PS1_}' ' \\\$\n';"
+export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${bash_ps1_venv}${PS1_}' ' \\\$\n';"
 
 # # Set window title
 # [path] $PREV_COMMAND
@@ -300,24 +310,43 @@ fi
 
 # ## Conda initialize
 
-condainit(){
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$("$HOME/devsoft/miniconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "~/devsoft/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "~/devsoft/miniconda3/etc/profile.d/conda.sh"
+condainit_linux_dir(){
+    # ### conda initialize ###
+    CONDA_DIR="$1"
+    if [ ! -d "$CONDA_DIR" ]; then
+    return 1;
+    fi;
+    __conda_setup="$("$CONDA_DIR/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="$PATH:~/devsoft/miniconda3/bin"
+        if [ -f "$CONDA_DIR/etc/profile.d/conda.sh" ]; then
+            . "$CONDA_DIR/etc/profile.d/conda.sh"
+        else
+            export PATH="$PATH:$CONDA_DIR/bin"
+        fi
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
-# <<< conda initialize <<<
+    unset __conda_setup
+    # ### conda initialize ###
 }
+
+condainit_linux(){
+    condainit_linux_dir "$HOME/devsoft/miniconda3" || {
+    condainit_linux_dir "$HOME/.local/miniconda3" || {
+    condainit_linux_dir "$HOME/miniconda3"
+    }
+    } 
+}
+
+condainit_windows(){
+    # ### conda initialize ###
+    eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
+    # ### conda initialize ###
+}
+
+condainit(){
+    condainit_linux
+    condainit_windows
+}
+
+# condainit
