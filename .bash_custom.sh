@@ -63,11 +63,11 @@ if [[ "$TERM" =~ "screen".* ]]; then
         echo 'Ctrl+t  Create a new window (with shell)'
         echo 'Ctrl+w  Go to the prev window'
         echo 'Ctrl+e  Go to the next window'
-        echo "p '  Toggle between last windows"
+        echo "Ctrl+s  Toggle between last windows (or prefix+')"
         echo 'Ctrl+[  Split current pane vertically into two panes'
         echo 'Ctrl+]  Split current pane horizontally into two panes'
         echo 'Alt+arrows  To go to panes'
-        echo 'p w  Choose window from a list, x to kill any'
+        echo 'prefix+w  Choose window from a list, x to kill any'
         echo 'Ctrl+D  Close the current pane'
     }
 fi
