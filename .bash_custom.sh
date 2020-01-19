@@ -24,21 +24,8 @@ esac
 # tmux on windows git bash  
 # https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]]; then
-  tmux
+    tmux
 fi
-
-echo
-echo '# Tmux'
-echo 'Ctrl+t  Create a new window (with shell)'
-echo 'Ctrl+w  Go to the prev window'
-echo 'Ctrl+e  Go to the next window'
-echo "p '  Toggle between last windows"
-echo 'Ctrl+[  Split current pane vertically into two panes'
-echo 'Ctrl+]  Split current pane horizontally into two panes'
-echo 'Alt+arrows  To go to panes'
-echo 'p w  Choose window from a list, x to kill any'
-echo 'Ctrl+D  Close the current pane'
-echo
 
 # To setup tmux on windows
 # https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
@@ -68,6 +55,22 @@ echo
 
 # Print ASCII art
 . ~/.ascii/art.sh
+
+# if inside tmux
+if [[ "$TERM" =~ "screen".* ]]; then
+    # Print tmux instructions
+    {
+        echo 'Ctrl+t  Create a new window (with shell)'
+        echo 'Ctrl+w  Go to the prev window'
+        echo 'Ctrl+e  Go to the next window'
+        echo "p '  Toggle between last windows"
+        echo 'Ctrl+[  Split current pane vertically into two panes'
+        echo 'Ctrl+]  Split current pane horizontally into two panes'
+        echo 'Alt+arrows  To go to panes'
+        echo 'p w  Choose window from a list, x to kill any'
+        echo 'Ctrl+D  Close the current pane'
+    }
+fi
 
 ## Alias definitions.
 
