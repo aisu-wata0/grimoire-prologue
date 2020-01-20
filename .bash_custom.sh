@@ -314,7 +314,7 @@ condainit_linux_dir(){
     # ### conda initialize ###
     CONDA_DIR="$1"
     if [ ! -d "$CONDA_DIR" ]; then
-    return 1;
+        return 1;
     fi;
     __conda_setup="$("$CONDA_DIR/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
     if [ $? -eq 0 ]; then
@@ -331,16 +331,16 @@ condainit_linux_dir(){
 }
 
 condainit_linux(){
-    condainit_linux_dir "$HOME/devsoft/miniconda3" || {
     condainit_linux_dir "$HOME/.local/miniconda3" || {
-    condainit_linux_dir "$HOME/miniconda3"
+    condainit_linux_dir "$HOME/miniconda3" || {
+    condainit_linux_dir "$HOME/devsoft/miniconda3"
     }
-    } 
+    }
 }
 
 condainit_windows(){
     # ### conda initialize ###
-    eval "$('/e/dev/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
+    eval "$('~/.local/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
     # ### conda initialize ###
 }
 
