@@ -69,6 +69,8 @@ if [[ "$TERM" =~ "screen".* ]]; then
         echo 'Alt+arrows  To go to panes'
         echo 'prefix+w  Choose window from a list, x to kill any'
         echo 'Ctrl+D  Close the current pane'
+        echo 'y       While in vi selection to copy to clipboard using xclip (and to tmux buffer)'
+        echo 'Ctrl+y  To paste buffer into ~/.tmux/buffer'
     }
 fi
 
