@@ -1,2 +1,3 @@
-
 .vscode/
+.tmux/plugins
+.tmux/buffer
