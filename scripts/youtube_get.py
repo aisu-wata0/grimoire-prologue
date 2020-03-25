@@ -65,8 +65,10 @@ if __name__ == "__main__":
 	if not args.video:
 		bashCommand = bashCommand + ' -x --audio-format "mp3" --audio-quality 320K --embed-thumbnail '
 	outputCom = ' --output "./output/%(title)s.%(ext)s" '
+	# https://github.com/ytdl-org/youtube-dl/issues/698
+	defaultArgs = " -i "
 
-	bashCommand = bashCommand + outputCom + args.link
+	bashCommand = bashCommand + defaultArgs + outputCom  + args.link
 
 	print(bashCommand, flush=True)
 	try:

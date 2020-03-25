@@ -349,4 +349,4 @@ condainit(){
     condainit_windows
 }
 
-# condainit
+condainit
