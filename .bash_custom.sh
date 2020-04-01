@@ -98,6 +98,10 @@ if command -v rsync &> /dev/null; then
     #
     #        Note that -a does not preserve hardlinks, because finding multiply-linked files is expensive.  You
     #        must separately specify -H
+    # # Not used:
+    # -o, --owner                 preserve owner (super-user only)
+    # -g, --group                 preserve group
+
     # -u, --update
     #    This forces rsync to skip any files which exist on the destination and have a modified  time  that
     #    is  newer than the source file.  (If an existing destination file has a modification time equal to
@@ -109,7 +113,7 @@ if command -v rsync &> /dev/null; then
     #    the  option,  unchanged  files  will  also  be output, but only if the receiving rsync is at least
     #    version 2.6.7 (you can use -vv with older versions of rsync, but that also turns on the output  of
     #    other verbose messages)..
-    alias cp="rsync -au -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
+    alias cp="rsync -a --no-o --no-g -u -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
 fi
 
 # <<< cp -> rsync <<<
@@ -133,7 +137,13 @@ alias lat='ls -h -lAt --color=auto'
 # sudo apt upgrade -y       # Installs some updates;
 # sudo apt full-upgrade -y  # Installs updates; may also remove packages
 # sudo apt autoremove -y    # Removes any old packages that are no longer needed
-alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y;'"
+alias henshin="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y;'"
+alias henshinZenbu="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sudo apt full-upgrade -y && sudo apt autoremove -y;'"
+# Pretty git log/graph
+alias gitgraph="git log --oneline --graph --decorate --abbrev-commit"
+# Quick tmux attach
+alias tata="tmux attach"
+
 
 # ## tmux
 
