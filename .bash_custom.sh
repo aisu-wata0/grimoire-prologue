@@ -98,22 +98,17 @@ if command -v rsync &> /dev/null; then
     #
     #        Note that -a does not preserve hardlinks, because finding multiply-linked files is expensive.  You
     #        must separately specify -H
-    # # Not used:
-    # -o, --owner                 preserve owner (super-user only)
-    # -g, --group                 preserve group
-
-    # -u, --update
-    #    This forces rsync to skip any files which exist on the destination and have a modified  time  that
-    #    is  newer than the source file.  (If an existing destination file has a modification time equal to
-    #    the source file’s, it will be updated if the sizes are different.
-
+    # -h, --human-readable
     # -i, --itemize-changes
     #    Requests  a  simple  itemized  list  of  the  changes  that are being made to each file, including
     #    attribute changes.  This is exactly the same as specifying --out-format='%i %n%L'.  If you  repeat
     #    the  option,  unchanged  files  will  also  be output, but only if the receiving rsync is at least
     #    version 2.6.7 (you can use -vv with older versions of rsync, but that also turns on the output  of
     #    other verbose messages)..
-    alias cp="rsync -a --no-o --no-g -u -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
+    # # Not used:
+    # -o, --owner                 preserve owner (super-user only)
+    # -g, --group                 preserve group
+    alias cp="rsync -a --no-o --no-g -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
 fi
 
 # <<< cp -> rsync <<<
