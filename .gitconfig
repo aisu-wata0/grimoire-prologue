@@ -1,6 +1,7 @@
 [core]
 	autocrlf = input
 	editor = code --wait
+	pager = less -r
 [user]
 	email = bruno.serbena@gmail.com
 	name = Bruno FS
