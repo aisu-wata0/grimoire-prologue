@@ -14,65 +14,79 @@ fi
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;; # interactive
-    *) return;; # not interactive
-esac
+# ## SSH Agent autostart
+# Auto start ssh-agent if necessary
+SSH_ENV="$HOME/.ssh/environment"
 
-# Start tmux ٩(◕‿◕｡)۶
-# tmux on windows git bash  
-# https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
-if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]]; then
-    tmux
-fi
+function start_agent {
+    case $- in
+        *i*) echo "Initialising new SSH agent...";; # interactive
+        *) ;; # not interactive
+    esac
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+}
 
-# To setup tmux on windows
-# https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
-# You can install the whole distribution of the tools from https://www.msys2.org/ and run a command to install Tmux. (GIT Bash uses MINGW compilation of GNU tools. It uses only selected ones.)
-# And then copy some files to installation folder of Git. This is what you do:
-
-# Install before-mentioned msys2 package and run bash shell
-# Install tmux using the following command: pacman -S tmux
-# Go to msys2 directory, in my case it is C:\msys64\usr\bin
-# Copy tmux.exe and msys-event-2-1-4.dll to your Git for Windows directory, mine is C:\Program Files\Git\usr\bin
-
-# https://github.com/valtron/llvm-stuff/wiki/Set-up-Windows-dev-environment-with-MSYS2
-# MSYS2
-# Note: $VARS refer to strings you should substitute yourself. E.g. $DEV -> D:/dev
-
-# Download from http://msys2.github.io
-# Install into $DEV/msys64
-# Run $DEV/msys2_shell.cmd
-# Run pacman -Syuu
-# Close the shell; reopen it, and run pacman -Syuu again, just in case :p
-# Pacman
-# pacman is the package manager bundled with msys. Use it to install useful things like gcc, flex, bison, git. The commands are pretty cryptic, so use the Pacman/Rosetta.
-
-# Set up $PATH
-# Open "Environment Variables > System Variables > Path"
-# At the end, add $DEV/msys64/usr/bin
-
-# Print ASCII art
-. ~/.ascii/art.sh
-
-# if inside tmux
-if [[ "$TERM" =~ "screen".* ]]; then
-    # Print tmux instructions
-    {
-        echo 'Ctrl+t  Create a new window (with shell)'
-        echo 'Ctrl+w  Go to the prev window'
-        echo 'Ctrl+e  Go to the next window'
-        echo "Ctrl+s  Toggle between last windows (or prefix+')"
-        echo 'Ctrl+[  Split current pane vertically into two panes'
-        echo 'Ctrl+]  Split current pane horizontally into two panes'
-        echo 'Alt+arrows  To go to panes'
-        echo 'prefix+w  Choose window from a list, x to kill any'
-        echo 'Ctrl+D  Close the current pane'
-        echo 'y       While in vi selection to copy to clipboard using xclip (and to tmux buffer)'
-        echo 'Ctrl+y  To paste buffer into ~/.tmux/buffer'
+# Source SSH settings, if applicable
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -p ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    # ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
     }
+else
+    start_agent;
 fi
+
+# ## Conda initialize
+
+condainit_linux_dir(){
+    # ### conda initialize ###
+    CONDA_DIR="$1"
+    if [ ! -d "$CONDA_DIR" ]; then
+        return 1;
+    fi;
+    __conda_setup="$("$CONDA_DIR/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "$CONDA_DIR/etc/profile.d/conda.sh" ]; then
+            . "$CONDA_DIR/etc/profile.d/conda.sh"
+        else
+            export PATH="$PATH:$CONDA_DIR/bin"
+        fi
+    fi
+    unset __conda_setup
+    # ### conda initialize ###
+}
+
+condainit_linux(){
+    condainit_linux_dir "$HOME/.local/miniconda3" || {
+    condainit_linux_dir "$HOME/miniconda3" || {
+    condainit_linux_dir "$HOME/devsoft/miniconda3"
+    }
+    }
+}
+
+condainit_windows(){
+    # ### conda initialize ###
+    eval "$('~/.local/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
+    # ### conda initialize ###
+}
+
+condainit(){
+    condainit_linux
+    condainit_windows
+}
+
+condainit
+# conda breaks gsettings path
+# https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
+alias gsettings=/usr/bin/gsettings
+
 
 # # Alias definitions.
 
@@ -138,6 +152,10 @@ alias henshinZenbu="sudo -- sh -c 'sudo apt update && sudo apt upgrade -y && sud
 alias gitgraph="git log --oneline --graph --decorate --abbrev-commit"
 # Quick tmux attach
 alias tata="tmux attach"
+# Better rm, moves to trashcan
+alias trash='mv --force -t ~/.local/share/Trash '
+# Show trashcan
+alias ls_trash='echo ~/.local/share/Trash && lat ~/.local/share/Trash'
 
 
 # ## tmux
@@ -149,6 +167,66 @@ alias f="find -iname"
 # <<< tmux <<<
 
 # <<<< Alias definitions. <<<<
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;; # interactive
+    *) return;; # not interactive
+esac
+
+# Start tmux ٩(◕‿◕｡)۶
+# tmux on windows git bash  
+# https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]]; then
+    tmux
+fi
+
+# To setup tmux on windows
+# https://gist.github.com/lhsfcboy/f5802a5985a1fe95fddb43824037fe39
+# You can install the whole distribution of the tools from https://www.msys2.org/ and run a command to install Tmux. (GIT Bash uses MINGW compilation of GNU tools. It uses only selected ones.)
+# And then copy some files to installation folder of Git. This is what you do:
+
+# Install before-mentioned msys2 package and run bash shell
+# Install tmux using the following command: pacman -S tmux
+# Go to msys2 directory, in my case it is C:\msys64\usr\bin
+# Copy tmux.exe and msys-event-2-1-4.dll to your Git for Windows directory, mine is C:\Program Files\Git\usr\bin
+
+# https://github.com/valtron/llvm-stuff/wiki/Set-up-Windows-dev-environment-with-MSYS2
+# MSYS2
+# Note: $VARS refer to strings you should substitute yourself. E.g. $DEV -> D:/dev
+
+# Download from http://msys2.github.io
+# Install into $DEV/msys64
+# Run $DEV/msys2_shell.cmd
+# Run pacman -Syuu
+# Close the shell; reopen it, and run pacman -Syuu again, just in case :p
+# Pacman
+# pacman is the package manager bundled with msys. Use it to install useful things like gcc, flex, bison, git. The commands are pretty cryptic, so use the Pacman/Rosetta.
+
+# Set up $PATH
+# Open "Environment Variables > System Variables > Path"
+# At the end, add $DEV/msys64/usr/bin
+
+# Print ASCII art
+. ~/.ascii/art.sh
+
+# if inside tmux
+if [[ "$TERM" =~ "screen".* ]]; then
+    # Print tmux instructions
+    {
+        echo 'Ctrl+t  Create a new window (with shell)'
+        echo 'Ctrl+w  Go to the prev window'
+        echo 'Ctrl+e  Go to the next window'
+        echo "Ctrl+s  Toggle between last windows (or prefix+')"
+        echo 'Ctrl+[  Split current pane vertically into two panes'
+        echo 'Ctrl+]  Split current pane horizontally into two panes'
+        echo 'Alt+arrows  To go to panes'
+        echo 'prefix+w  Choose window from a list, x to kill any'
+        echo 'Ctrl+D  Close the current pane'
+        echo 'y       While in vi selection to copy to clipboard using xclip (and to tmux buffer)'
+        echo 'Ctrl+y  To paste buffer into ~/.tmux/buffer'
+    }
+fi
 
 # tab size
 tabs -4 2>  /dev/null
@@ -281,79 +359,3 @@ fi
 xinput --set-prop 11 "Device Accel Velocity Scaling" 1 2>  /dev/null
 xinput --set-prop 11 "Device Accel Profile" -1 2>  /dev/null
 xinput --set-prop 11 "Device Accel Adaptive Deceleration" 4 2>  /dev/null
-
-
-# conda breaks gsettings path
-# https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
-alias gsettings=/usr/bin/gsettings
-
-
-# ## SSH Agent autostart
-# Auto start ssh-agent if necessary
-SSH_ENV="$HOME/.ssh/environment"
-
-function start_agent {
-    case $- in
-        *i*) echo "Initialising new SSH agent...";; # interactive
-        *) ;; # not interactive
-    esac
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add;
-}
-
-# Source SSH settings, if applicable
-if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" > /dev/null
-    #ps ${SSH_AGENT_PID} doesn't work under cywgin
-    ps -p ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-    # ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
-    }
-else
-    start_agent;
-fi
-
-# ## Conda initialize
-
-condainit_linux_dir(){
-    # ### conda initialize ###
-    CONDA_DIR="$1"
-    if [ ! -d "$CONDA_DIR" ]; then
-        return 1;
-    fi;
-    __conda_setup="$("$CONDA_DIR/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "$CONDA_DIR/etc/profile.d/conda.sh" ]; then
-            . "$CONDA_DIR/etc/profile.d/conda.sh"
-        else
-            export PATH="$PATH:$CONDA_DIR/bin"
-        fi
-    fi
-    unset __conda_setup
-    # ### conda initialize ###
-}
-
-condainit_linux(){
-    condainit_linux_dir "$HOME/.local/miniconda3" || {
-    condainit_linux_dir "$HOME/miniconda3" || {
-    condainit_linux_dir "$HOME/devsoft/miniconda3"
-    }
-    }
-}
-
-condainit_windows(){
-    # ### conda initialize ###
-    eval "$('~/.local/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
-    # ### conda initialize ###
-}
-
-condainit(){
-    condainit_linux
-    condainit_windows
-}
-
-condainit
