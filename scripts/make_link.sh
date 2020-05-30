@@ -24,10 +24,10 @@ make_link() {
 			# Windows needs to be told if it's a directory or not. Infer that.
 			# Also: note that we convert `/` to `\`. In this case it's necessary.
 			if [[ -d "$path_target" ]]; then
-				echo '"cmd <<<' "mklink /D "${path_link//\//\\}" "${path_target//\//\\}""\"
+				echo 'cmd <<< "'"mklink /D "${path_link//\//\\}" "${path_target//\//\\}""\"
 				# cmd <<< "mklink /D "${path_link//\//\\}" "${path_target//\//\\}""
 			else
-				echo '"cmd <<<' "mklink "${path_link//\//\\}" "${path_target//\//\\}""\"
+				echo 'cmd <<< "'"mklink "${path_link//\//\\}" "${path_target//\//\\}""\"
 				# cmd <<< "mklink "${path_link//\//\\}" "${path_target//\//\\}""
 			fi
 		else
