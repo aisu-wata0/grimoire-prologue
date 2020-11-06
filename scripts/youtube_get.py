@@ -23,13 +23,16 @@ if __name__ == "__main__":
 							help='verbose')
 	parser.add_argument('--video', action='store_true',
 							help='download video, not only mp3')
+	parser.add_argument('--help_dl', action='store_true',
+							help='downloader help.')
+	parser.add_argument('remainder_args', nargs=argparse.REMAINDER)
 
 	## Parse arguments
 	args = parser.parse_args()
 
 	if not args.pathOutDir:
-		print('output in ./output/', flush=True)
 		args.pathOutDir = './output/'
+		print(f'output in {args.pathOutDir}', flush=True)
 
 	pathYoutubeDl = ''
 	if shutil.which('youtube-dl'):
@@ -49,7 +52,7 @@ if __name__ == "__main__":
 			elif os.name == 'posix':
 				url = 'https://yt-dl.org/downloads/latest/youtube-dl'
 			else:
-				raise OSError('lidl os')
+				raise OSError('OS not supported. Install youtube-dl on your machine.')
 
 			# Download the file from 'url' and save it locally under 'file_name':
 			Grimoire.downloadFile(url, pathYoutubeDl)
@@ -64,19 +67,24 @@ if __name__ == "__main__":
 	bashCommand = pathYoutubeDl
 	if not args.video:
 		bashCommand = bashCommand + ' -x --audio-format "mp3" --audio-quality 320K --embed-thumbnail '
-	outputCom = ' --output "./output/%(title)s.%(ext)s" '
-	# https://github.com/ytdl-org/youtube-dl/issues/698
-	defaultArgs = " -i "
+	if args.help_dl:
+		bashCommand = bashCommand + ' --help'
+	else:
+		outputCom = f' --output "{args.pathOutDir}%(title)s - %(id)s.%(ext)s" '
+		# https://github.com/ytdl-org/youtube-dl/issues/698
+		defaultArgs = " -i "
 
-	bashCommand = bashCommand + defaultArgs + outputCom  + args.link
+		bashCommand += args.link + defaultArgs + outputCom
+		bashCommand += ' ' + ' '.join(args.remainder_args)
 
 	print(bashCommand, flush=True)
 	try:
 		process = subprocess.call(bashCommand)
 	except Exception as err:
 		print(err)
-	if process != 0:
-		print("Try updating youtube-dl:")
-		print("conda upgrade youtube-dl")
-		print("pip install -U youtube-dl")
-		print("if you don't know conda use the pip command")
+	else:
+		if process != 0:
+			print("Try updating youtube-dl:")
+			print("conda upgrade youtube-dl")
+			print("pip install -U youtube-dl")
+			print("if you don't know conda use the pip command")
