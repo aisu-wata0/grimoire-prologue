@@ -64,11 +64,11 @@ if __name__ == "__main__":
 
 	Grimoire.ensure_dir(args.pathOutDir)
 
-	bashCommand = pathYoutubeDl
+	bashCommand = pathYoutubeDl + ' '
 	if not args.video:
 		bashCommand = bashCommand + ' -x --audio-format "mp3" --audio-quality 320K --embed-thumbnail '
 	if args.help_dl:
-		bashCommand = bashCommand + ' --help'
+		bashCommand = bashCommand + ' --help '
 	else:
 		outputCom = f' --output "{args.pathOutDir}%(title)s - %(id)s.%(ext)s" '
 		# https://github.com/ytdl-org/youtube-dl/issues/698
