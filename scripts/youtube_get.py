@@ -82,9 +82,11 @@ if __name__ == "__main__":
 		process = subprocess.call(bashCommand)
 	except Exception as err:
 		print(err)
+		exit(1)
 	else:
 		if process != 0:
 			print("Try updating youtube-dl:")
 			print("conda upgrade youtube-dl")
 			print("pip install -U youtube-dl")
 			print("if you don't know conda use the pip command")
+		exit(process)
