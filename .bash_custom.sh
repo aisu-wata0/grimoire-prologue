@@ -236,6 +236,9 @@ if [[ "$TERM" =~ "screen".* ]]; then
         echo 'Ctrl+D  Close the current pane'
         echo 'y       While in vi selection to copy to clipboard using xclip (and to tmux buffer)'
         echo 'Ctrl+y  To paste buffer into ~/.tmux/buffer'
+        echo ':save-buffer ~/.tmux/buffer'
+        echo 'prefix+/ to search, n next, shift+n previous'
+        echo 'prefix+f to search windows'
     }
 fi
 
