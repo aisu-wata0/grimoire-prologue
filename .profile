@@ -60,8 +60,12 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # Cuda CUPTI
-export CUDA_HOME="/usr/local/cuda/"
-export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/extras/CUPTI/lib64"
+export CUDA_VERSION="10.1"
+export CUDA_HOME="/usr/local/cuda-${CUDA_VERSION}"
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${CUDA_HOME}/lib64:${CUDA_HOME}/extras/CUPTI/lib64"
+export LD_INCLUDE_PATH="${LD_INCLUDE_PATH}:${CUDA_HOME}/include:${CUDA_HOME}/extras/CUPTI/include"
+
+# CUDA_VERSION="10.1" LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/cuda-${CUDA_VERSION}/lib64:/usr/local/cuda-${CUDA_VERSION}/extras/CUPTI/lib64" LD_INCLUDE_PATH="${LD_INCLUDE_PATH}:/usr/local/cuda-${CUDA_VERSION}/include:/usr/local/cuda-${CUDA_VERSION}/extras/CUPTI/include"
 
 # END if [ ! $DOT_PROFILE_SOURCED ]; then
 fi
