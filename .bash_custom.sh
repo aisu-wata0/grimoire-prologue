@@ -124,12 +124,14 @@ if command -v rsync &> /dev/null; then
     # # Not used:
     # -o, --owner                 preserve owner (super-user only)
     # -g, --group                 preserve group
-    alias cp="rsync -a --no-o --no-g -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
+    alias cprsync="rsync -a --no-o --no-g -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
 fi
 
 # <<< cp -> rsync <<<
 
 alias appget="sudo aptitude"
+alias del="rm -i"
+alias rmi="rm -i"
 # ls aliases
 ## Colorize the ls output ##
 # -h = readable file size
