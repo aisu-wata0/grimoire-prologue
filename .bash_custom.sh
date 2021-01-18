@@ -124,12 +124,14 @@ if command -v rsync &> /dev/null; then
     # # Not used:
     # -o, --owner                 preserve owner (super-user only)
     # -g, --group                 preserve group
-    alias cp="rsync -a --no-o --no-g -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
+    alias cprsync="rsync -a --no-o --no-g -e ssh --partial-dir=.rsync-partial  -hi --info=progress2"
 fi
 
 # <<< cp -> rsync <<<
 
 alias appget="sudo aptitude"
+alias del="rm -i"
+alias rmi="rm -i"
 # ls aliases
 ## Colorize the ls output ##
 # -h = readable file size
@@ -234,6 +236,9 @@ if [[ "$TERM" =~ "screen".* ]]; then
         echo 'Ctrl+D  Close the current pane'
         echo 'y       While in vi selection to copy to clipboard using xclip (and to tmux buffer)'
         echo 'Ctrl+y  To paste buffer into ~/.tmux/buffer'
+        echo ':save-buffer ~/.tmux/buffer'
+        echo 'prefix+/ to search, n next, shift+n previous'
+        echo 'prefix+f to search windows'
     }
 fi
 
