@@ -7,8 +7,6 @@ import sys
 import urllib.request
 import shutil
 
-import Grimoire
-
 youtube_dl_name = "yt-dlp"
 
 if __name__ == "__main__":
@@ -46,7 +44,7 @@ if __name__ == "__main__":
 
 	# youtube-dl is installed
 
-	Grimoire.ensure_dir(args.pathOutDir)
+	os.makedirs(args.pathOutDir, exist_ok=True)
 
 	bashCommand = youtube_dl_name + ' '
 	if not args.video:
