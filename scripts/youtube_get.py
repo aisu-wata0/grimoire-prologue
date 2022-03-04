@@ -9,6 +9,8 @@ import shutil
 
 import Grimoire
 
+youtube_dl_name = "yt-dlp"
+
 if __name__ == "__main__":
 	## Instantiate the parser
 	parser = argparse.ArgumentParser(
@@ -34,43 +36,25 @@ if __name__ == "__main__":
 		args.pathOutDir = './output/'
 		print(f'output in {args.pathOutDir}', flush=True)
 
-	pathYoutubeDl = ''
-	if shutil.which('youtube-dl'):
-		# youtube-dl is installed
-		pathYoutubeDl = 'youtube-dl'
-	else:
-		# youtube-dl is on same directory as script
-		pathScriptDir = Grimoire.getDirLocation(__file__)
-		pathYoutubeDl = os.path.join(pathScriptDir, 'youtube-dl')
+	if not shutil.which(youtube_dl_name):
 
-		if not os.path.isfile(pathYoutubeDl):
-			# if youtube-dl doesn't exist, download it on the script's dir
-			print('youtube-dl not detected, downloading...', flush=True)
-			# select os
-			if os.name == 'nt':
-				url = 'https://yt-dl.org/latest/youtube-dl.exe'
-			elif os.name == 'posix':
-				url = 'https://yt-dl.org/downloads/latest/youtube-dl'
-			else:
-				raise OSError('OS not supported. Install youtube-dl on your machine.')
+		# update
+		print("Youtube downloader not found, installing " + youtube_dl_name)
+		bashCommand = "pip install -U " + youtube_dl_name
+		print(bashCommand, flush=True)
+		process = subprocess.call(bashCommand)
 
-			# Download the file from 'url' and save it locally under 'file_name':
-			Grimoire.downloadFile(url, pathYoutubeDl)
-		else:
-			# update
-			bashCommand = pathYoutubeDl + ' -U '
-			print(bashCommand, flush=True)
-			process = subprocess.call(bashCommand)
+	# youtube-dl is installed
 
 	Grimoire.ensure_dir(args.pathOutDir)
 
-	bashCommand = pathYoutubeDl + ' '
+	bashCommand = youtube_dl_name + ' '
 	if not args.video:
 		bashCommand = bashCommand + ' -x --audio-format "mp3" --audio-quality 320K --embed-thumbnail '
 	if args.help_dl:
 		bashCommand = bashCommand + ' --help '
 	else:
-		outputCom = f' --output "{args.pathOutDir}%(title)s - %(id)s.%(ext)s" '
+		outputCom = f' --output "{args.pathOutDir}%(title)s - %(uploader)s %(id)s.%(ext)s" '
 		# https://github.com/ytdl-org/youtube-dl/issues/698
 		defaultArgs = " -i "
 
