@@ -148,6 +148,8 @@ alias lat='ls -h -lAt --color=auto'
 # -v     natural sort of (version) numbers within text
 alias lv='ls -h -v --color=auto'
 
+alias ffmpeg='ffmpeg -hide_banner'
+
 # sudo apt update        # Fetches the list of available updates
 # sudo apt upgrade -y       # Installs some updates;
 # sudo apt full-upgrade -y  # Installs updates; may also remove packages
