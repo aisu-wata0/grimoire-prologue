@@ -40,6 +40,7 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 export PIP_DEFAULT_TIMEOUT=1000
 export PATH="/c/Users/bruno/AppData/Roaming/Python/Python37/Scripts:$PATH"
