@@ -155,10 +155,11 @@ alias yt-dl='yt-dlp.exe -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"'
 ffmpeg_cut_audio(){
     echo ffmpeg -ss $1 -to $2 -i "$3" -map_metadata 0 -c:v copy -c:a copy "$([ $4 ] && echo "$4" || echo "$3-cut_audio.mp3")"
 }
+alias ffmpeg_cut_audio='ffmpeg_cut_audio'
 stl(){
-    until streamlink --hls-live-restart "$1"  best $([ $2 ] && echo -o $2); do sleep 10; done
+    until streamlink --hls-live-restart "$1"  best "$([ $2 ] && echo -o $2 || streamlink.ts)"; do sleep 10; done
 }
-
+alias stl='stl'
 
 # sudo apt update        # Fetches the list of available updates
 # sudo apt upgrade -y       # Installs some updates;
