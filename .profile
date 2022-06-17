@@ -45,13 +45,13 @@ export LC_ALL=en_US.UTF-8
 export PIP_DEFAULT_TIMEOUT=1000
 export PATH="/c/Users/bruno/AppData/Roaming/Python/Python37/Scripts:$PATH"
 
-export PATH="~/scripts/:$PATH"
-export PATH="~/scripts/video-downplay/:$PATH"
-export PYTHONPATH="~/scripts/:$PYTHONPATH"
-export PYTHONPATH="~/scripts/video-downplay/:$PYTHONPATH"
+export PATH="$HOME/scripts/:$PATH"
+export PATH="$HOME/scripts/video-downplay/:$PATH"
+export PYTHONPATH="$HOME/scripts/:$PYTHONPATH"
+export PYTHONPATH="$HOME/scripts/video-downplay/:$PYTHONPATH"
 
-export PATH="~/.local/bin:$PATH"
-export PATH="~/nobackup/VSCode-linux-x64:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/nobackup/VSCode-linux-x64:$PATH"
 
 export PATH=/home/soft/likwid/bin:/home/soft/likwid/sbin:$PATH
 
