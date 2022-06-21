@@ -1,11 +1,14 @@
-BoldAsFont=-1
+BoldAsFont=yes
 Transparency=high
 Columns=134
 Rows=72
 ScrollbackLines=2000000
 ThemeFile=
 PgUpDnScroll=yes
-Locale=
-Charset=
+Locale=C
+Charset=UTF-8
 FontSmoothing=full
 AllowBlinking=yes
+Term=xterm-256color
+Font=DejaVu Sans Mono for Powerline
+FontHeight=9

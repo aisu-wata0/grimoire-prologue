@@ -13,3 +13,5 @@
     cmd = code --wait --diff $LOCAL $REMOTE
 [difftool]
 	prompt = false
+[credential "https://gitlab.com"]
+	provider = generic
