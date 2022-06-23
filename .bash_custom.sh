@@ -265,6 +265,7 @@ tabs -4 2>  /dev/null
 # this way, no command is left behind
 # export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
 TRAP_DEBUG_1='history -a;'
+# export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
 # used in trap DEBUG later
 
 # Eternal bash history.
@@ -334,7 +335,7 @@ function settitle () {
 export PROMPT_COMMAND=${PROMPT_COMMAND}' export PREV_COMMAND="";'
 
 TRAP_DEBUG_0='settitle "$BASH_COMMAND";'
-trap "$TRAP_DEBUG_0 $TRAP_DEBUG_1" DEBUG
+trap "${TRAP_DEBUG_0} ${TRAP_DEBUG_1}" DEBUG
 
 
 # Substitute unreadable green background on blue text with underline on blue text for other writable directories.
