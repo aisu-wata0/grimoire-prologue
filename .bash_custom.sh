@@ -263,12 +263,20 @@ tabs -4 2>  /dev/null
 # Every terminal has its history appended in the same file
 # .bash_history turns into a global timeline
 # this way, no command is left behind
-export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
+# export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
+TRAP_DEBUG_1='history -a;'
+# used in trap DEBUG later
 
-## 100K lines is around one 10MB
-
-export HISTSIZE=$((100*1000)) # stored in memory
-export HISTFILESIZE=$((2000*1000)) # stored in file
+# Eternal bash history.
+# ---------------------
+# Undocumented feature which sets the size to "unlimited".
+# http://stackoverflow.com/questions/9457233/unlimited-bash-history
+export HISTFILESIZE=
+export HISTSIZE=
+export HISTTIMEFORMAT="[%F %T] "
+# Change the file location because certain bash sessions truncate .bash_history file upon close.
+# http://superuser.com/questions/575479/bash-history-truncated-to-500-lines-on-each-login
+export HISTFILE=~/.bash_eternal_history
 
 ## don't put duplicate lines or lines starting with space in the history.
 ## See bash(1) for more options
@@ -318,12 +326,15 @@ function settitle () {
     if [ -z "$PREV_COMMAND" ]; then
         export PREV_COMMAND=${@}
     fi
-    echo -ne "\033]0;[$(pwd)]  ${PREV_COMMAND}\007"
+    current_dirname=${PWD##*/}
+    current_dirname=${current_dirname:-/}
+    echo -ne "\033]0;[${current_dirname}]  ${PREV_COMMAND}\007"
 }
 
 export PROMPT_COMMAND=${PROMPT_COMMAND}' export PREV_COMMAND="";'
 
-trap 'settitle "$BASH_COMMAND"' DEBUG
+TRAP_DEBUG_0='settitle "$BASH_COMMAND";'
+trap "$TRAP_DEBUG_0 $TRAP_DEBUG_1" DEBUG
 
 
 # Substitute unreadable green background on blue text with underline on blue text for other writable directories.
