@@ -153,7 +153,7 @@ alias ffmpeg='ffmpeg -hide_banner'
 alias yt-dla='yt-dlp.exe -x --audio-format mp3 --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"  -f "ba"'
 alias yt-dl='yt-dlp.exe -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"'
 ffmpeg_cut_audio(){
-    echo ffmpeg -ss $1 -to $2 -i "$3" -map_metadata 0 -c:v copy -c:a copy "$([ $4 ] && echo "$4" || echo "$3-cut_audio.mp3")"
+    echo ffmpeg -ss "$1" -to "$2" -i \""$3"\" -map_metadata 0 -c:v copy -c:a copy \""$([ $4 ] && echo "$4" || echo "$3-cut_audio.mp3")"\"
 }
 alias ffmpeg_cut_audio='ffmpeg_cut_audio'
 stl(){
