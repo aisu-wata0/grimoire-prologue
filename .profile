@@ -47,6 +47,7 @@ export PYTHONUTF8=1
 
 export PIP_DEFAULT_TIMEOUT=1000
 export PATH="/c/Users/bruno/AppData/Roaming/Python/Python37/Scripts:$PATH"
+export PATH="/c/ProgramData/chocolatey/bin:$PATH"
 
 export PATH="$HOME/scripts/:$PATH"
 export PATH="$HOME/scripts/video-downplay/:$PATH"
