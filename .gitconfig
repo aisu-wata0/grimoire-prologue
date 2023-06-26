@@ -3,8 +3,8 @@
 	editor = code --wait
 	pager = less -r
 [user]
-	email = bruno.serbena@gmail.com
-	name = Bruno FS
+	email = aisu.wata0@gmail.com
+	name = Aisu Wata
 [push]
 	default = matching
 [diff]
@@ -14,4 +14,11 @@
 [difftool]
 	prompt = false
 [credential "https://gitlab.com"]
+	provider = generic
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential "https://huggingface.co"]
 	provider = generic
