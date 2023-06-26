@@ -150,12 +150,42 @@ alias lv='ls -h -v --color=auto'
 
 alias ffmpeg='ffmpeg -hide_banner'
 
-alias yt-dla='yt-dlp.exe -x --audio-format mp3 --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"  -f "ba"'
-alias yt-dl='yt-dlp.exe -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"'
+alias yt-dla='yt-dlp.exe   --fragment-retries "123"  --cookies c.txt  -f "(bestaudio)" -x  --add-metadata  --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s" '
+alias yt-dl='yt-dlp.exe   --fragment-retries "123"  --cookies c.txt  -f "(bestvideo+bestaudio/best)"   --add-metadata  --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s" '
+alias yt-dlh='yt-dlp.exe   --fragment-retries "123"  --cookies c.txt  -f "(bestvideo+bestaudio/best)"   --add-metadata  --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s" '
+
+alias yt-dl_wait='yt-dlp.exe   --fragment-retries "123"  --cookies c.txt  -f "(bestvideo+bestaudio/best)"   --add-metadata  --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"  --wait-for-video 30'
+alias yt-dl_from_start='yt-dlp.exe   --fragment-retries "123"  --cookies c.txt  -f "(bestvideo+bestaudio/best)"   --add-metadata  --embed-thumbnail -o "%(title)s [%(upload_date)s][%(id)s].%(ext)s"  --live-from-start'
+
+
+retry_until_success(){
+    echo "until $1 ; do echo "Try"; done"
+}
+
+
 ffmpeg_cut_audio(){
-    echo ffmpeg -ss "$1" -to "$2" -i \""$3"\" -map_metadata 0 -c:v copy -c:a copy \""$([ $4 ] && echo "$4" || echo "$3-cut_audio.mp3")"\"
+    echo ffmpeg -ss "$1" -to "$2" -i \""$3"\" -map_metadata 0 -movflags use_metadata_tags  -map 0:v -map 0:a   -c:v copy -c:a copy   \""$([ $4 ] && echo "$4" || echo "$3-cut_audio.mp3")"\"
 }
 alias ffmpeg_cut_audio='ffmpeg_cut_audio'
+
+ffmpeg_cut_video(){
+    echo ffmpeg -ss "$1" -to "$2" -i \""$3"\" -map_metadata 0 -movflags use_metadata_tags  -map 0:v -map 0:a   -c:v copy -c:a copy   \""$([ $4 ] && echo "$4" || echo "$3-cut_audio.mp4")"\"
+}
+alias ffmpeg_cut_video='ffmpeg_cut_video'
+
+ffmpeg_cover_vid(){
+    echo ffmpeg -i \""$3"\"  -map 0:v -map -0:V -c copy  \""$([ $4 ] && echo "$4" || echo "$3-cover.jpg")"\"
+}
+alias ffmpeg_cover_vid='ffmpeg_cover_vid'
+
+
+ffmpeg_help(){
+    echo ffmpeg_cut_audio 0:00:00 1:23:45 "video_name.mp3"
+    echo ffmpeg_cut_video 0:00:00 1:23:45 "video_name.mp4"
+    echo ffmpeg_cover_vid "video_name.mp4"
+}
+alias ffmpeg_help='ffmpeg_help'
+
 stl(){
     until streamlink --hls-live-restart "$1"  best "$([ $2 ] && echo -o $2 || streamlink.ts)"; do sleep 10; done
 }
@@ -288,16 +318,16 @@ shopt -s histappend
 
 
 ## GIT PS1
-if [ ! -f ~/.bash_git ]; then
-    echo "~/.bash_git not found, downloading"
-    curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
-fi
+# if [ ! -f ~/.bash_git ]; then
+#     echo "~/.bash_git not found, downloading"
+#     curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > ~/.bash_git
+# fi
 
-export GIT_PS1_SHOWUPSTREAM="verbose"
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWCOLORHINTS=true
+# export GIT_PS1_SHOWUPSTREAM="verbose"
+# export GIT_PS1_SHOWDIRTYSTATE=true
+# export GIT_PS1_SHOWCOLORHINTS=true
 
-source ~/.bash_git
+# source ~/.bash_git
 ## PS1
 
 # (conda env) (chroot)[usr@machine] [path] [datetime] (git branch sync) $
