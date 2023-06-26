@@ -89,6 +89,9 @@ condainit
 # https://askubuntu.com/questions/558446/my-dconf-gsettings-installation-is-broken-how-can-i-fix-it-without-ubuntu-reins
 alias gsettings=/usr/bin/gsettings
 
+# ## Node
+
+export NODE_OPTIONS=--max_old_space_size=32768
 
 # # Alias definitions.
 
