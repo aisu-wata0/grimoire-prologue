@@ -8,3 +8,4 @@ remote_connect_timeout_secs: 11000
 
 envs_dirs:
   - /usr/local/share/python/conda/
+  - C:/usr/local/share/python/conda
