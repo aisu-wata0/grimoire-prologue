@@ -42,6 +42,8 @@ fi
 export LANG=C.UTF-8
 export LC_CTYPE=C.UTF-8
 export LC_ALL=C.UTF-8
+
+# Python
 export PYTHONIOENCODING=utf8
 export PYTHONUTF8=1
 
@@ -54,6 +56,12 @@ export PATH="$HOME/scripts/video-downplay/:$PATH"
 export PYTHONPATH="$HOME/scripts/:$PYTHONPATH"
 export PYTHONPATH="$HOME/scripts/video-downplay/:$PYTHONPATH"
 
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+# Go
+export PATH="$HOME/go/bin:$PATH"
+
+
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/nobackup/VSCode-linux-x64:$PATH"
 
@@ -62,8 +70,6 @@ export PATH=/home/soft/likwid/bin:/home/soft/likwid/sbin:$PATH
 export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-# Rust
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # Cuda CUPTI
 export CUDA_VERSION="10.1"

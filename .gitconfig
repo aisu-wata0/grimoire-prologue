@@ -22,3 +22,5 @@
 	required = true
 [credential "https://huggingface.co"]
 	provider = generic
+[safe]
+	directory = *

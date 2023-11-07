@@ -71,10 +71,20 @@ condainit_linux(){
     }
 }
 
+condainit_windows_dir(){
+    CONDA_DIR="$1"
+    if [ ! -d "$CONDA_DIR" ]; then
+        return 1;
+    fi;
+    "$CONDA_DIR"/activate
+}
+
 condainit_windows(){
     # ### conda initialize ###
     # eval "$('~/.local/Miniconda3/Scripts/conda.exe' 'shell.bash' 'hook' 2> /dev/null)"
-    ~/.local/Miniconda3/Scripts/activate
+    condainit_windows_dir "~/miniconda3/Scripts" || {
+    condainit_windows_dir "~/.local/Miniconda3/Scripts"
+    }
     conda activate base
     # ### conda initialize ###
 }
