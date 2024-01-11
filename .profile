@@ -60,6 +60,12 @@ export PYTHONPATH="$HOME/scripts/video-downplay/:$PYTHONPATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 # Go
 export PATH="$HOME/go/bin:$PATH"
+# Node
+## PNPM
+export LOCALAPPDATA_P=$(cygpath $LOCALAPPDATA)
+export PNPM_HOME="$LOCALAPPDATA_P/pnpm"
+# export PNPM_HOME="$LOCALAPPDATA/pnpm"
+export PATH="$PNPM_HOME:$PATH"
 
 
 export PATH="$HOME/.local/bin:$PATH"
