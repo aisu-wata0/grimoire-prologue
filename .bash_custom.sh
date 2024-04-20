@@ -308,7 +308,7 @@ tabs -4 2>  /dev/null
 # this way, no command is left behind
 # export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
 export PROMPT_COMMAND=${PROMPT_COMMAND}' history -a;'
-# TRAP_DEBUG_1='history -a;'
+# TRAP_DEBUG_1='history -a'
 
 # Eternal bash history.
 # ---------------------
@@ -360,18 +360,45 @@ export PS1_="${bash_ps1_location}:${bash_ps1_path} ${bash_ps1_time}${bash_reset_
 export PS1="${PS1_}$(__git_ps1)"$' $\n'
 export PROMPT_COMMAND=${PROMPT_COMMAND}" __git_ps1 '\n${bash_ps1_conda}${bash_ps1_venv}${PS1_}' ' \\\$\n';"
 
+
 # # Set window title
 # [path] $PREV_COMMAND
 
 # https://unix.stackexchange.com/questions/104018/set-dynamic-window-title-based-on-command-input
 
+
 function settitle () {
+    # Define the maximum length for PREV_COMMAND
+    local PREV_COMMANDmax_length=50
+
+    # Check if the PREV_COMMAND environment variable is empty
     if [ -z "$PREV_COMMAND" ]; then
         export PREV_COMMAND=${@}
+    else
+        return;
     fi
+
+    # Truncate PREV_COMMAND if it exceeds the maximum length
+    if [ ${#PREV_COMMAND} -gt $PREV_COMMANDmax_length ]; then
+        PREV_COMMAND="${PREV_COMMAND:0:$PREV_COMMANDmax_length}..."
+    fi
+
+    # Extract the last directory from the PWD
     current_dirname=${PWD##*/}
-    current_dirname=${current_dirname:-/}
-    echo -ne "\033]0;[${current_dirname}]  ${PREV_COMMAND}\007"
+
+    # Extract the second-to-last directory from the PWD
+    second_last_dirname=${PWD%/*}
+    second_last_dirname=${second_last_dirname##*/}
+
+    # Set the terminal window title
+    if [ -n "$second_last_dirname" ]; then
+        # If the second-to-last directory is not empty, include it in the title
+        echo -ne "\033]0;[${second_last_dirname}/${current_dirname}]  ${PREV_COMMAND}\007"
+    else
+        # If the second-to-last directory is empty, display only the last directory
+        current_dirname=${current_dirname:-/}
+        echo -ne "\033]0;[${current_dirname}]  ${PREV_COMMAND}\007"
+    fi
 }
 
 export PROMPT_COMMAND=${PROMPT_COMMAND}' export PREV_COMMAND="";'
