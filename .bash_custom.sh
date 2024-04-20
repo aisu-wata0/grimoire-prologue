@@ -371,6 +371,9 @@ function settitle () {
     # Define the maximum length for PREV_COMMAND
     local PREV_COMMANDmax_length=50
 
+    # Define an array of blacklisted commands
+    local blacklisted_commands=("history")
+
     # Check if the PREV_COMMAND environment variable is empty
     if [ -z "$PREV_COMMAND" ]; then
         export PREV_COMMAND=${@}
@@ -382,6 +385,14 @@ function settitle () {
     if [ ${#PREV_COMMAND} -gt $PREV_COMMANDmax_length ]; then
         PREV_COMMAND="${PREV_COMMAND:0:$PREV_COMMANDmax_length}..."
     fi
+
+    # Check if PREV_COMMAND matches any blacklisted command (case-insensitive)
+    for cmd in "${blacklisted_commands[@]}"; do
+        if [[ "${PREV_COMMAND,,}" == "$cmd"* ]]; then
+            PREV_COMMAND="."
+            break
+        fi
+    done
 
     # Extract the last directory from the PWD
     current_dirname=${PWD##*/}
