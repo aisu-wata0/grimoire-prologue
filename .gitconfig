@@ -11,6 +11,10 @@
     tool = vscode
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  tool = vscode
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 [difftool]
 	prompt = false
 [credential "https://gitlab.com"]
