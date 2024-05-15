@@ -349,7 +349,11 @@ shopt -s histappend
 export bash_reset_color="\[\e[0m\]"
 export bash_blue="\[\033[01;34m\]"
 export bash_yellow="\[\033[33;1m\]"
-export bash_ps1_location="\${debian_chroot:+(\$debian_chroot)}${bash_yellow}\u@\h"
+export bash_ps1_root="\${debian_chroot:+(\$debian_chroot)}"
+export bash_ps1_user="\u"
+export bash_ps1_machine="\h"
+# export bash_ps1_location="${bash_ps1_root}${bash_yellow}${bash_ps1_user}@${bash_ps1_machine}"
+export bash_ps1_location="${bash_ps1_root}${bash_yellow}@${bash_ps1_machine}"
 export bash_ps1_path="${bash_blue}\w"
 export bash_ps1_time="${bash_yellow}[\D{%F %T}]"
 export bash_ps1_conda="\${CONDA_DEFAULT_ENV:+(\`basename \$CONDA_DEFAULT_ENV\`) }"
@@ -372,7 +376,7 @@ function settitle () {
     local PREV_COMMANDmax_length=50
 
     # Define an array of blacklisted commands
-    local blacklisted_commands=("history")
+    local blacklisted_commands=("history" "eval")
 
     # Check if the PREV_COMMAND environment variable is empty
     if [ -z "$PREV_COMMAND" ]; then
