@@ -398,22 +398,31 @@ function settitle () {
         fi
     done
 
+    PWD_relative="$PWD"
+    # Check if PWD starts with $HOME (is relative or equal)
+    if [[ "$PWD" == "$HOME/"* || "$PWD" == "$HOME" ]]; then
+        # Substitute $HOME with ~
+        PWD_relative="${PWD_relative//$HOME/}"  
+        PWD_relative="~/${PWD_relative}"
+    fi
     # Extract the last directory from the PWD
-    current_dirname=${PWD##*/}
+    current_dirname=${PWD_relative##*/}
 
     # Extract the second-to-last directory from the PWD
-    second_last_dirname=${PWD%/*}
+    second_last_dirname=${PWD_relative%/*}
     second_last_dirname=${second_last_dirname##*/}
 
     # Set the terminal window title
+    pathium=${current_dirname}
     if [ -n "$second_last_dirname" ]; then
         # If the second-to-last directory is not empty, include it in the title
-        echo -ne "\033]0;[${second_last_dirname}/${current_dirname}]  ${PREV_COMMAND}\007"
+        pathium=${second_last_dirname}/${current_dirname}
     else
         # If the second-to-last directory is empty, display only the last directory
-        current_dirname=${current_dirname:-/}
-        echo -ne "\033]0;[${current_dirname}]  ${PREV_COMMAND}\007"
+        pathium=${current_dirname:-/}
     fi
+
+    echo -ne "\033]0;[${pathium}]  ${PREV_COMMAND}\007"
 }
 
 export PROMPT_COMMAND=${PROMPT_COMMAND}' export PREV_COMMAND="";'
